@@ -3,9 +3,193 @@
 <head>
   <meta charset="utf-8">
   <title>Quantified Self - Diary</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
 
+
+  <div class='container'>
+    <h1>Diary</h1>
+    <div>future buttons that change the date</div>
+
+    <div>
+      <h3>Breakfast</h3>
+      <table class='breakfast bordered highlight'>
+        <tr>
+          <th>Name</th>
+          <th>Calories</th>
+        </tr>
+        <tr>
+          <td>BANANA!</td>
+          <td>1000</td>
+          <td><i class='material-icons'>delete</i></td>
+        </tr>
+        <tr>
+          <td>Total Calories</td>
+          <td>2384</td>
+        </tr>
+        <tr>
+          <td>Remaining Calories</td>
+          <td>834</td>
+        </tr>
+      </table>
+    </div>
+
+    <div>
+      <h3>Lunch</h3>
+      <table class='bordered highlight'>
+        <tr>
+          <th>Name</th>
+          <th>Calories</th>
+        </tr>
+        <tr>
+          <td>BANANA!</td>
+          <td>1000</td>
+        </tr>
+        <tr>
+          <td>Total Calories</td>
+          <td>2384</td>
+        </tr>
+        <tr>
+          <td>Remaining Calories</td>
+          <td>834</td>
+        </tr>
+      </table>
+    </div>
+
+    <div>
+      <h3>Dinner</h3>
+      <table class='bordered highlight'>
+        <tr>
+          <th>Name</th>
+          <th>Calories</th>
+        </tr>
+        <tr>
+          <td>BANANA!</td>
+          <td>1000</td>
+        </tr>
+        <tr>
+          <td>Total Calories</td>
+          <td>2384</td>
+        </tr>
+        <tr>
+          <td>Remaining Calories</td>
+          <td>834</td>
+        </tr>
+      </table>
+    </div>
+
+    <div>
+      <h3>Snacks</h3>
+      <table class='bordered highlight'>
+        <tr>
+          <th>Name</th>
+          <th>Calories</th>
+        </tr>
+        <tr>
+          <td>BANANA!</td>
+          <td>1000</td>
+        </tr>
+        <tr>
+          <td>Total Calories</td>
+          <td>2384</td>
+        </tr>
+        <tr>
+          <td>Remaining Calories</td>
+          <td>834</td>
+        </tr>
+      </table>
+    </div>
+
+    <div>
+      <h3>Excercise</h3>
+      <table class='bordered highlight'>
+        <tr>
+          <th>Name</th>
+          <th>Calories</th>
+        </tr>
+        <tr>
+          <td>BANANA!</td>
+          <td>1000</td>
+        </tr>
+        <tr>
+          <td>Total Calories</td>
+          <td>2384</td>
+        </tr>
+      </table>
+    </div>
+
+    <div>
+      <h3>Totals</h3>
+      <table class='bordered highlight'>
+        <tr>
+          <td>Goal Calories</td>
+          <td>832523</td>
+        </tr>
+        <tr>
+          <td>Calories Consumed</td>
+          <td>90342</td>
+        </tr>
+        <tr>
+          <td>Calories Burned</td>
+          <td>341</td>
+        </tr>
+        <tr>
+          <td>Remaining Calories</td>
+          <td>1000000</td>
+        </tr>
+      </table>
+    </div>
+
+    <div>
+      <h3>Foods</h3>
+      <a href='/foods.html' class="waves-effect waves-light btn">Create New</a>
+      <p>Add Selected To</p>
+      <a href='#' class="add-breakfast waves-effect waves-light btn">Breakfast</a>
+      <a href='#' class="add-lunch waves-effect waves-light btn">Lunch</a>
+      <a href='#' class="add-dinner waves-effect waves-light btn">Dinner</a>
+      <a href='#' class="add-snacks waves-effect waves-light btn">Snacks</a>
+      <p>Filter by Name</p>
+
+      <div class="input-field">
+        <input placeholder="Food Name">
+      </div>
+      <table class='bordered highlight'>
+        <tr>
+          <th>Name</th>
+          <th>Calories</th>
+        </tr>
+        <tr>
+          <td>Banana</td>
+          <td>34</td>
+          <td><input type='checkbox' id='something'/><label for='something'></label></td>
+        </tr>
+      </table>
+    </div>
+
+    <div>
+      <h3>Exercises</h3>
+      <a href='/exercises.html' class="waves-effect waves-light btn">Create New</a>
+      <a href='#' class="waves-effect waves-light btn">Add Selected</a>
+      <p>Filter by Name</p>
+      <div class="input-field">
+        <input placeholder="Exercise Name">
+      </div>
+      <table class='bordered highlight'>
+        <tr>
+          <th>Name</th>
+          <th>Calories</th>
+        </tr>
+        <tr>
+          <td>30 Minute Walk</td>
+          <td>3294</td>
+          <td><input type='checkbox' id='somethingelse'/><label for='somethingelse'></label></td>
+        </tr>
+      </table>
+    </div>
+  </div>
   <script src="main.bundle.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
 </body>
 </html>
