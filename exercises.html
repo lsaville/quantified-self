@@ -10,29 +10,31 @@
 <body>
 
   <div class='container'>
-    <h1>Manage Exercises</h1> 
+    <h1>Manage Exercises</h1>
 
     <div class='input-field'>
       <input name='name' placeholder='Name'>
       <input name='calories' placeholder='Calories'>
     </div>
-    <a href='#' class='add-exercise waves-effect waves-light btn'>Add Food</a>
+    <a href='#' class='add-exercise waves-effect waves-light btn'>Add Exercise</a>
 
     <div class='input-field'>
       <input placeholder='Filter by Name'>
     </div>
 
     <table class='exercises bordered highlight'>
-      <tr>
+      <thead>
         <th>Name</th>
         <th>Calories</th>
         <th></th>
-      </tr>
-      <tr>
-        <td>Banana</td>
-        <td>40</td>
-        <td><a href='#' class='delete-exercise material-icons'>delete</a></td>
-      </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Banana</td>
+          <td>40</td>
+          <td><a href='#' class='delete-exercise material-icons'>delete</a></td>
+        </tr>
+      </tbody>
     </table>
   </div>
 
