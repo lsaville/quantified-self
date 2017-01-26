@@ -14,16 +14,17 @@
 
     <form id='myForm'>
 
-    <div class='input-field'>
-      <input name='name' id='exercise-name' type='text' onInvalid='this.setCustomValidity("Please enter an exercise name")' required>
-      <label class='active' for='exercise-name'>name</label>
-    </div>
+      <div class='input-field'>
+        <input name='name' id='exercise-name-input' type='text' onInvalid='this.setCustomValidity("Please enter an exercise name")' required>
+        <label class='active' for='exercise-name-input'>name</label>
+      </div>
 
-    <div class='input-field'>
-      <input name='calories' id='calories-input' type='text' class='validate' onInvalid='this.setCustomValidity("Please enter a calorie amount")' required>
-      <label class='active' for='calories-input' data-error='wrong'>calories</label>
-    </div>
-    <a href='#' class='add-exercise waves-effect waves-light btn'>Add Exercise</a>
+      <div class='input-field'>
+        <input name='calories' id='exercise-calories-input' type='text' class='validate' onInvalid='this.setCustomValidity("Please enter a calorie amount")' required>
+        <label class='active' for='exercise-calories-input' data-error='wrong'>calories</label>
+      </div>
+
+      <a href='#' class='add-exercise waves-effect waves-light btn'>Add Exercise</a>
 
     </form>
 
@@ -38,7 +39,6 @@
         <th></th>
       </thead>
       <tbody>
-
       </tbody>
     </table>
   </div>
