@@ -5,7 +5,7 @@ var test       = require('selenium-webdriver/testing');
 
 test.describe('testing exercises.html', function() {
   var driver;
-  this.timeout(1000000);
+  this.timeout(10000);
 
   test.beforeEach(function() {
     driver = new webdriver.Builder()
@@ -259,15 +259,13 @@ test.describe('testing exercises.html', function() {
 
     driver.get('http://localhost:8080/exercises.html');
 
-    var filterInput = driver.findElement({css: '#name-filter'})
-
+    var filterInput = driver.findElement({css: '#name-filter'});
+    filterInput.click();
     filterInput.sendKeys('s');
 
-    driver.sleep(1000000)
-
     driver.findElement({css: '#table-body'}).getText().then(function(textValue) {
-      assert.include(textValue, 'running');
-      asssert.notInclude(textValue, 'swimming');
+      assert.include(textValue, 'swimming');
+      assert.notInclude(textValue, 'running');
     })
   })
 });
