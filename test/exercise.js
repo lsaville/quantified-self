@@ -5,7 +5,7 @@ var test       = require('selenium-webdriver/testing');
 
 test.describe('testing exercises.html', function() {
   var driver;
-  this.timeout(10000);
+  this.timeout(100000);
 
   test.beforeEach(function() {
     driver = new webdriver.Builder()
@@ -184,7 +184,7 @@ test.describe('testing exercises.html', function() {
     });
   })
 
-  test.it('lets you click on name or calories and they become input fields containing the current values', function(){
+  test.xit('lets you click on name or calories and they become input fields containing the current values', function(){
     driver.get('http://localhost:8080/exercises.html');
 
     var name     = driver.findElement({id: 'exercise-name-input'});
@@ -197,7 +197,57 @@ test.describe('testing exercises.html', function() {
 
     var exerciseName = driver.findElement({css: '#exercise-table tbody tr:nth-of-type(1) td:nth-child(1)'});
 
-    excerciseName.click();
+    // excerciseName.click();
 
+    // driver.sleep(1000000)
+  })
+
+  test.it('lets you change the exercise name inline', function() {
+    driver.get('http://localhost:8080/exercises.html');
+
+    var name           = driver.findElement({id: 'exercise-name-input'});
+    var calories       = driver.findElement({id: 'exercise-calories-input'});
+    var submitButton   = driver.findElement({id: 'add-exercise'});
+    var elseWhere      = driver.findElement({css: '.container'});
+
+    name.sendKeys('running');
+    calories.sendKeys('300');
+    submitButton.click();
+
+    var exerciseName = driver.findElement({css: '#exercise-table tbody tr:nth-of-type(1) td:nth-child(1)'});
+
+    exerciseName.click();
+    exerciseName.sendKeys(' hard');
+    elseWhere.click();
+
+    driver.findElement({css: '#exercise-table tbody tr:nth-of-type(1) td:nth-child(1)'}).getText().then(function(textValue) {
+      assert.equal(textValue, 'running hard');
+    })
+    // driver.sleep(1000000)
+  })
+
+  test.it('persists the inline change after refresh', function() {
+    driver.get('http://localhost:8080/exercises.html');
+
+    var name           = driver.findElement({id: 'exercise-name-input'});
+    var calories       = driver.findElement({id: 'exercise-calories-input'});
+    var submitButton   = driver.findElement({id: 'add-exercise'});
+    var elseWhere      = driver.findElement({css: '.container'});
+
+    name.sendKeys('running');
+    calories.sendKeys('300');
+    submitButton.click();
+
+    var exerciseName = driver.findElement({css: '#exercise-table tbody tr:nth-of-type(1) td:nth-child(1)'});
+
+    exerciseName.click();
+    exerciseName.sendKeys(' hard');
+    elseWhere.click();
+
+    driver.get('http://localhost:8080/exercises.html');
+
+    driver.findElement({css: '#exercise-table tbody tr:nth-of-type(1) td:nth-child(1)'}).getText().then(function(textValue) {
+      assert.equal(textValue, 'running hard');
+    })
   })
 });
