@@ -26,4 +26,19 @@ Exercise.prototype.delete = function () {
     localStorage.setItem('exercises', exercisesJSON);
 }
 
+
+Exercise.prototype.edit = function (oldName, oldCalories) {
+  var exercisesJSON = localStorage.getItem('exercises');
+  var exercises = JSON.parse(exercisesJSON);
+  var newindex = ''
+  _.forEach(exercises, function(exercise, index){
+    if ( exercise.name === oldName){
+      return newindex = index
+    }
+  });
+  exercises[newindex] = {name: this.name, calories: this.calories}
+  exercisesJSON = JSON.stringify(exercises);
+  localStorage.setItem('exercises', exercisesJSON);
+};
+
 module.exports = Exercise;
