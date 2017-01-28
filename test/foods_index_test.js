@@ -249,4 +249,23 @@ test.describe('testing foods.html', function() {
       assert.equal(textValue, 'banana split');
     })
   })
-  });
+  test.it('can filter by name', function() {
+    driver.get('http://localhost:8080/foods.html');
+
+    var data = JSON.stringify([{name: 'banana', calories: '30'}, {name: 'Chocolate Cake', calories: '400'}]);
+
+    driver.executeScript("window.localStorage.setItem('foods','" +data+ "');");
+
+    driver.get('http://localhost:8080/foods.html');
+
+    var filterInput = driver.findElement({css: '#name-filter'});
+    filterInput.click();
+    filterInput.sendKeys('B');
+
+
+    driver.findElement({css: '#table-body'}).getText().then(function(textValue) {
+      assert.include(textValue, 'banana');
+      assert.notInclude(textValue, 'Chocolate Cake');
+    })
+  })
+});
