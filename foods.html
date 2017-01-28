@@ -12,26 +12,36 @@
 <div>
 
 <div class='container'>
-	<h1>Manage Foods:</h1>
+	<h1>Manage Foods</h1>
 
-	<div class='input-field'>
-		<input id='name' name='name' placeholder='Name'>
-		<input name='calories' placeholder='Calories'>
-	</div>
-	<a href='#' class='add-food waves-effect waves-light btn'>Add Food</a>
+  <form id='myForm'>
+
+    <div class='input-field'>
+      <input name='name' id='food-name-input' type='text' >
+      <label class='active' for='food-name-input'>name</label>
+    </div>
+
+    <div class='input-field'>
+      <input name='calories' id='food-calories-input' type='text'>
+      <label class='active' for='food-calories-input' >calories</label>
+    </div>
+
+    <a href='#' id='add-food' class='add-food waves-effect waves-light btn'>Add Food</a>
+
+  </form>
 
 	<div class='input-field'>
 		<input placeholder='Filter by Name'>
 	</div>
 
 
-	<table id='foods' class='foods bordered highlight'>
+	<table id='food-table' class='foods bordered highlight'>
 		<thead>
 			<th>Name</th>
 			<th>Calories</th>
 			<th></th>
 		</thead>
-		<tbody>
+		<tbody id='table-body'>
 		</tbody>
 	</table>
 </div>
