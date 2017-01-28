@@ -5,7 +5,7 @@ var test       = require('selenium-webdriver/testing');
 
 test.describe('testing exercises.html', function() {
   var driver;
-  this.timeout(100000);
+  this.timeout(1000000);
 
   test.beforeEach(function() {
     driver = new webdriver.Builder()
@@ -247,6 +247,27 @@ test.describe('testing exercises.html', function() {
 
     driver.findElement({css: '#exercise-table tbody tr:nth-of-type(1) td:nth-child(1)'}).getText().then(function(textValue) {
       assert.equal(textValue, 'running hard');
+    })
+  })
+
+  test.it('can filter by name', function() {
+    driver.get('http://localhost:8080/exercises.html');
+
+    var data = JSON.stringify([{name: 'running', calories: '300'}, {name: 'swimming', calories: '400'}]);
+
+    driver.executeScript("window.localStorage.setItem('exercises','" +data+ "');");
+
+    driver.get('http://localhost:8080/exercises.html');
+
+    var filterInput = driver.findElement({css: '#name-filter'})
+
+    filterInput.sendKeys('s');
+
+    driver.sleep(1000000)
+
+    driver.findElement({css: '#table-body'}).getText().then(function(textValue) {
+      assert.include(textValue, 'running');
+      asssert.notInclude(textValue, 'swimming');
     })
   })
 });
