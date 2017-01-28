@@ -12,24 +12,33 @@
   <div class='container'>
     <h1>Manage Exercises</h1>
 
-    <div class='input-field'>
-      <input name='name' placeholder='Name'>
-      <input name='calories' placeholder='Calories'>
-    </div>
-    <a href='#' class='add-exercise waves-effect waves-light btn'>Add Exercise</a>
+    <form id='myForm'>
+
+      <div class='input-field'>
+        <input name='name' id='exercise-name-input' type='text' >
+        <label class='active' for='exercise-name-input'>name</label>
+      </div>
+
+      <div class='input-field'>
+        <input name='calories' id='exercise-calories-input' type='text'>
+        <label class='active' for='exercise-calories-input' calories</label>
+      </div>
+
+      <a href='#' id='add-exercise' class='add-exercise waves-effect waves-light btn'>Add Exercise</a>
+
+    </form>
 
     <div class='input-field'>
       <input placeholder='Filter by Name'>
     </div>
 
-    <table class='exercises bordered highlight'>
+    <table id='exercise-table' class='exercises bordered highlight'>
       <thead>
         <th>Name</th>
         <th>Calories</th>
         <th></th>
       </thead>
-      <tbody>
-        
+      <tbody id='table-body'>
       </tbody>
     </table>
   </div>
