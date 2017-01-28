@@ -261,7 +261,7 @@ test.describe('testing exercises.html', function() {
 
     var filterInput = driver.findElement({css: '#name-filter'});
     filterInput.click();
-    filterInput.sendKeys('s');
+    filterInput.sendKeys('S');
 
     driver.findElement({css: '#table-body'}).getText().then(function(textValue) {
       assert.include(textValue, 'swimming');
