@@ -142,51 +142,73 @@
       </table>
     </div>
 
-    <div>
-      <h3>Foods</h3>
-      <a href='/foods.html' class="waves-effect waves-light btn">Create New</a>
-      <p>Add Selected To</p>
-      <a href='#' class="add-breakfast waves-effect waves-light btn">Breakfast</a>
-      <a href='#' class="add-lunch waves-effect waves-light btn">Lunch</a>
-      <a href='#' class="add-dinner waves-effect waves-light btn">Dinner</a>
-      <a href='#' class="add-snacks waves-effect waves-light btn">Snacks</a>
-      <p>Filter by Name</p>
+    <div class='row'>
+      <div class='col s4 offset-s1'>
+        
+        <h3>Foods</h3>
+        <a href='/foods.html' class="waves-effect waves-light btn">Create New</a>
+        <p>Add Selected To</p>
+        <div class='row'>
+          <div class='col s6'>
+            <a href='#' class="add-breakfast waves-effect waves-light btn">Breakfast</a>
+          </div>
+          <div class='col s6'>
+              <a href='#' class="add-lunch waves-effect waves-light btn">Lunch</a>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col s6'>
+            <a href='#' class="add-dinner waves-effect waves-light btn">Dinner</a>
+          </div>
+          <div class='col s6'>
+            <a href='#' class="add-snacks waves-effect waves-light btn">Snacks</a>
+          </div>
+        </div>
 
-      <div class="input-field">
-        <input placeholder="Food Name">
-      </div>
-      <table class='bordered highlight'>
-        <tr>
-          <th>Name</th>
-          <th>Calories</th>
-        </tr>
-        <tr>
-          <td>Banana</td>
-          <td>34</td>
-          <td><input type='checkbox' id='something'/><label for='something'></label></td>
-        </tr>
-      </table>
-    </div>
+              
 
-    <div>
-      <h3>Exercises</h3>
-      <a href='/exercises.html' class="waves-effect waves-light btn">Create New</a>
-      <a href='#' class="waves-effect waves-light btn">Add Selected</a>
-      <p>Filter by Name</p>
-      <div class="input-field">
-        <input placeholder="Exercise Name">
+        <p>Filter by Name</p>
+        <div class="input-field">
+          <input placeholder="Food Name">
+        </div>
+        <table class='foods-diary bordered highlight'>
+          <thead>
+            <th></th>
+            <th>Name</th>
+            <th>Calories</th>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
       </div>
-      <table class='bordered highlight'>
-        <tr>
-          <th>Name</th>
-          <th>Calories</th>
-        </tr>
-        <tr>
-          <td>30 Minute Walk</td>
-          <td>3294</td>
-          <td><input type='checkbox' id='somethingelse'/><label for='somethingelse'></label></td>
-        </tr>
-      </table>
+
+
+
+      <div class='col sm5 offset-s2'>
+        <h3>Exercises</h3>
+
+        <div class='row'>
+          <div class='col s6'>
+            <a href='/exercises.html' class="waves-effect waves-light btn">Create New</a>
+          </div>
+          <div class='col s6'>
+            <a href='#' class="waves-effect waves-light btn">Add Selected</a>
+          </div>
+        </div>
+
+        <p>Filter by Name</p>
+        <div class="input-field">
+          <input placeholder="Exercise Name">
+        </div>
+        <table class='exercises-diary bordered highlight'>
+          <thead>
+            <th>Name</th>
+            <th>Calories</th>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
   <script src="main.bundle.js"></script>
