@@ -166,7 +166,7 @@ test.describe('testing exercises.html', function() {
     })
   })
 
-  test.it('can delete an exercise', function(){
+  test.xit('can delete an exercise', function(){
     driver.get('http://localhost:8080/exercises.html');
 
     var name     = driver.findElement({id: 'exercise-name-input'});
@@ -182,5 +182,22 @@ test.describe('testing exercises.html', function() {
     driver.findElement({id: 'table-body'}).getText().then(function(value){
       expect(value).to.be.empty;
     });
+  })
+
+  test.it('lets you click on name or calories and they become input fields containing the current values', function(){
+    driver.get('http://localhost:8080/exercises.html');
+
+    var name     = driver.findElement({id: 'exercise-name-input'});
+    var calories = driver.findElement({id: 'exercise-calories-input'});
+    var submitButton   = driver.findElement({id: 'add-exercise'});
+
+    name.sendKeys('running');
+    calories.sendKeys('300');
+    submitButton.click();
+
+    var exerciseName = driver.findElement({css: '#exercise-table tbody tr:nth-of-type(1) td:nth-child(1)'});
+
+    excerciseName.click();
+
   })
 });
