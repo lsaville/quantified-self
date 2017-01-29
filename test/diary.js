@@ -23,8 +23,8 @@ test.describe('testing diary.html', function() {
     var dateOnPage = driver.findElement({id: 'date'});
     var dateToday  = new Date;
 
-    name.getAttribute('value').then(function(value) {
-      assert.equal(value, date.Today.toDateString())
+    dateOnPage.getText().then(function(value) {
+      assert.equal(value, dateToday.toDateString())
     })
   })
 })
