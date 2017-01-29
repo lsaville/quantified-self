@@ -249,7 +249,8 @@ test.describe('testing foods.html', function() {
       assert.equal(textValue, 'banana split');
     })
   })
-  test.it('can filter by name', function() {
+  
+  test.xit('can filter by name', function() {
     driver.get('http://localhost:8080/foods.html');
 
     var data = JSON.stringify([{name: 'banana', calories: '30'}, {name: 'Chocolate Cake', calories: '400'}]);
