@@ -17,7 +17,7 @@ test.describe('testing exercises.html', function() {
     driver.quit();
   })
 
-  test.xit('should allow me to add a name and calories for an exercise', function(){
+  test.it('should allow me to add a name and calories for an exercise', function(){
     driver.get('http://localhost:8080/exercises.html');
 
     var name     = driver.findElement({id: 'exercise-name-input'})
@@ -36,7 +36,7 @@ test.describe('testing exercises.html', function() {
     });
   });
 
-  test.xit('should allow me to create an exercise', function(){
+  test.it('should allow me to create an exercise', function(){
     driver.get('http://localhost:8080/exercises.html');
 
     var name     = driver.findElement({id: 'exercise-name-input'});
@@ -47,16 +47,16 @@ test.describe('testing exercises.html', function() {
     calories.sendKeys('300');
     submitButton.click();
 
-    driver.findElement({css: '#exercise-table tbody tr td:nth-child(1)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#exercises-table tbody tr td:nth-child(1)'}).getText().then(function(textValue) {
       assert.equal(textValue, 'running');
     })
 
-    driver.findElement({css: '#exercise-table tbody tr td:nth-child(2)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#exercises-table tbody tr td:nth-child(2)'}).getText().then(function(textValue) {
       assert.equal(textValue, '300');
     })
   });
 
-  test.xit('my exercises exist when I visit the site', function(){
+  test.it('my exercises exist when I visit the site', function(){
     driver.get('http://localhost:8080/exercises.html');
 
     var data = JSON.stringify([{name: 'running', calories: '300'}]);
@@ -65,16 +65,16 @@ test.describe('testing exercises.html', function() {
 
     driver.get('http://localhost:8080/exercises.html');
 
-    driver.findElement({css: '#exercise-table tbody tr td:nth-child(1)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#exercises-table tbody tr td:nth-child(1)'}).getText().then(function(textValue) {
       assert.equal(textValue, 'running');
     })
 
-    driver.findElement({css: '#exercise-table tbody tr td:nth-child(2)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#exercises-table tbody tr td:nth-child(2)'}).getText().then(function(textValue) {
       assert.equal(textValue, '300');
     })
   });
 
-  test.xit('the calorie field is validated', function(){
+  test.it('the calorie field is validated', function(){
     driver.get('http://localhost:8080/exercises.html');
 
     var calories       = driver.findElement({id: 'exercise-calories-input'});
@@ -88,7 +88,7 @@ test.describe('testing exercises.html', function() {
     })
   });
 
-  test.xit('the name field is validated', function(){
+  test.it('the name field is validated', function(){
     driver.get('http://localhost:8080/exercises.html');
 
     var name           = driver.findElement({id: 'exercise-name-input'});
@@ -102,7 +102,7 @@ test.describe('testing exercises.html', function() {
     })
   });
 
-  test.xit("doesn't allow an exercise to be created if a field is invalid", function(){
+  test.it("doesn't allow an exercise to be created if a field is invalid", function(){
     driver.get('http://localhost:8080/exercises.html');
 
     var name           = driver.findElement({id: 'exercise-name-input'});
@@ -116,7 +116,7 @@ test.describe('testing exercises.html', function() {
     });
   });
 
-  test.xit('maintains order when refreshed', function(){
+  test.it('maintains order when refreshed', function(){
     driver.get('http://localhost:8080/exercises.html');
 
     var name     = driver.findElement({id: 'exercise-name-input'});
@@ -131,42 +131,42 @@ test.describe('testing exercises.html', function() {
     calories.sendKeys('23');
     submitButton.click();
 
-    driver.findElement({css: '#exercise-table tbody tr:nth-of-type(1) td:nth-child(1)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#exercises-table tbody tr:nth-of-type(1) td:nth-child(1)'}).getText().then(function(textValue) {
       assert.equal(textValue, 'basketball');
     })
 
-    driver.findElement({css: '#exercise-table tbody tr:nth-of-type(1) td:nth-child(2)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#exercises-table tbody tr:nth-of-type(1) td:nth-child(2)'}).getText().then(function(textValue) {
       assert.equal(textValue, '23');
     })
 
-    driver.findElement({css: '#exercise-table tbody tr:nth-of-type(2) td:nth-child(1)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#exercises-table tbody tr:nth-of-type(2) td:nth-child(1)'}).getText().then(function(textValue) {
       assert.equal(textValue, 'running');
     })
 
-    driver.findElement({css: '#exercise-table tbody tr:nth-of-type(2) td:nth-child(2)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#exercises-table tbody tr:nth-of-type(2) td:nth-child(2)'}).getText().then(function(textValue) {
       assert.equal(textValue, '300');
     })
 
     driver.get('http://localhost:8080/exercises.html');
 
-    driver.findElement({css: '#exercise-table tbody tr:nth-of-type(1) td:nth-child(1)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#exercises-table tbody tr:nth-of-type(1) td:nth-child(1)'}).getText().then(function(textValue) {
       assert.equal(textValue, 'basketball');
     })
 
-    driver.findElement({css: '#exercise-table tbody tr:nth-of-type(1) td:nth-child(2)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#exercises-table tbody tr:nth-of-type(1) td:nth-child(2)'}).getText().then(function(textValue) {
       assert.equal(textValue, '23');
     })
 
-    driver.findElement({css: '#exercise-table tbody tr:nth-of-type(2) td:nth-child(1)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#exercises-table tbody tr:nth-of-type(2) td:nth-child(1)'}).getText().then(function(textValue) {
       assert.equal(textValue, 'running');
     })
 
-    driver.findElement({css: '#exercise-table tbody tr:nth-of-type(2) td:nth-child(2)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#exercises-table tbody tr:nth-of-type(2) td:nth-child(2)'}).getText().then(function(textValue) {
       assert.equal(textValue, '300');
     })
   })
 
-  test.xit('can delete an exercise', function(){
+  test.it('can delete an exercise', function(){
     driver.get('http://localhost:8080/exercises.html');
 
     var name     = driver.findElement({id: 'exercise-name-input'});
@@ -184,7 +184,7 @@ test.describe('testing exercises.html', function() {
     });
   })
 
-  test.xit('lets you click on name or calories and they become input fields containing the current values', function(){
+  test.it('lets you click on name or calories and they become input fields containing the current values', function(){
     driver.get('http://localhost:8080/exercises.html');
 
     var name     = driver.findElement({id: 'exercise-name-input'});
@@ -195,14 +195,14 @@ test.describe('testing exercises.html', function() {
     calories.sendKeys('300');
     submitButton.click();
 
-    var exerciseName = driver.findElement({css: '#exercise-table tbody tr:nth-of-type(1) td:nth-child(1)'});
+    var exerciseName = driver.findElement({css: '#exercises-table tbody tr:nth-of-type(1) td:nth-child(1)'});
 
     // excerciseName.click();
 
     // driver.sleep(1000000)
   })
 
-  test.xit('lets you change the exercise name inline', function() {
+  test.it('lets you change the exercise name inline', function() {
     driver.get('http://localhost:8080/exercises.html');
 
     var name           = driver.findElement({id: 'exercise-name-input'});
@@ -214,18 +214,18 @@ test.describe('testing exercises.html', function() {
     calories.sendKeys('300');
     submitButton.click();
 
-    var exerciseName = driver.findElement({css: '#exercise-table tbody tr:nth-of-type(1) td:nth-child(1)'});
+    var exerciseName = driver.findElement({css: '#exercises-table tbody tr:nth-of-type(1) td:nth-child(1)'});
 
     exerciseName.click();
     exerciseName.sendKeys(' hard');
     elseWhere.click();
 
-    driver.findElement({css: '#exercise-table tbody tr:nth-of-type(1) td:nth-child(1)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#exercises-table tbody tr:nth-of-type(1) td:nth-child(1)'}).getText().then(function(textValue) {
       assert.equal(textValue, 'running hard');
     })
   })
 
-  test.xit('persists the inline change after refresh', function() {
+  test.it('persists the inline change after refresh', function() {
     driver.get('http://localhost:8080/exercises.html');
 
     var name           = driver.findElement({id: 'exercise-name-input'});
@@ -237,7 +237,7 @@ test.describe('testing exercises.html', function() {
     calories.sendKeys('300');
     submitButton.click();
 
-    var exerciseName = driver.findElement({css: '#exercise-table tbody tr:nth-of-type(1) td:nth-child(1)'});
+    var exerciseName = driver.findElement({css: '#exercises-table tbody tr:nth-of-type(1) td:nth-child(1)'});
 
     exerciseName.click();
     exerciseName.sendKeys(' hard');
@@ -245,7 +245,7 @@ test.describe('testing exercises.html', function() {
 
     driver.get('http://localhost:8080/exercises.html');
 
-    driver.findElement({css: '#exercise-table tbody tr:nth-of-type(1) td:nth-child(1)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#exercises-table tbody tr:nth-of-type(1) td:nth-child(1)'}).getText().then(function(textValue) {
       assert.equal(textValue, 'running hard');
     })
   })
