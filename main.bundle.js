@@ -226,6 +226,7 @@
 	//editable ----------------------------------------------------------------------
 
 	function recordCellHtmlName(className) {
+	  debugger;
 	  return $('.' + className).children('td')[0].innerHTML;
 	}
 
