@@ -9,42 +9,42 @@
 </head>
 <body>
 
-<div>
+  <div>
 
-<div class='container'>
-	<h1>Manage Foods</h1>
+  <div class='container'>
+  	<h1>Manage Foods</h1>
 
-  <form id='myForm'>
+    <form id='myForm'>
 
-    <div class='input-field'>
-      <input name='name' id='food-name-input' type='text' >
-      <label class='active' for='food-name-input'>name</label>
-    </div>
+      <div class='input-field'>
+        <input name='name' id='food-name-input' type='text' >
+        <label class='active' for='food-name-input'>name</label>
+      </div>
 
-    <div class='input-field'>
-      <input name='calories' id='food-calories-input' type='text'>
-      <label class='active' for='food-calories-input' >calories</label>
-    </div>
+      <div class='input-field'>
+        <input name='calories' id='food-calories-input' type='text'>
+        <label class='active' for='food-calories-input' >calories</label>
+      </div>
 
-    <a href='#' id='add-food' class='add-food waves-effect waves-light btn'>Add Food</a>
+      <a href='#' id='add-food' class='add-food waves-effect waves-light btn'>Add Food</a>
 
-  </form>
+    </form>
 
-	<div class='input-field'>
-		<input placeholder='Filter by Name'>
-	</div>
+  	<div class='input-field'>
+  		<input type='text' id='name-filter' name='name-filter' placeholder='Filter by Name'>
+  	</div>
 
 
-	<table id='food-table' class='foods bordered highlight'>
-		<thead>
-			<th>Name</th>
-			<th>Calories</th>
-			<th></th>
-		</thead>
-		<tbody id='table-body'>
-		</tbody>
-	</table>
-</div>
+  	<table id='food-table' class='foods bordered highlight'>
+  		<thead>
+  			<th>Name</th>
+  			<th>Calories</th>
+  			<th></th>
+  		</thead>
+  		<tbody id='table-body'>
+  		</tbody>
+  	</table>
+  </div>
 
 	<script src="main.bundle.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
