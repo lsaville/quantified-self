@@ -14,7 +14,7 @@ test.describe('testing diary.html', function() {
   })
 
   test.afterEach(function() {
-    driver.quit;
+    driver.quit();
   })
 
   test.it('shows me todays date', function() {
