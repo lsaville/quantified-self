@@ -5,7 +5,7 @@ var test       = require('selenium-webdriver/testing');
 
 test.describe('testing exercises.html', function() {
   var driver;
-  this.timeout(10000);
+  this.timeout(100000);
 
   test.beforeEach(function() {
     driver = new webdriver.Builder()
@@ -47,11 +47,11 @@ test.describe('testing exercises.html', function() {
     calories.sendKeys('300');
     submitButton.click();
 
-    driver.findElement({css: '#exercise-table tbody tr td:nth-child(1)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#exercises-table tbody tr td:nth-child(1)'}).getText().then(function(textValue) {
       assert.equal(textValue, 'running');
     })
 
-    driver.findElement({css: '#exercise-table tbody tr td:nth-child(2)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#exercises-table tbody tr td:nth-child(2)'}).getText().then(function(textValue) {
       assert.equal(textValue, '300');
     })
   });
@@ -65,11 +65,11 @@ test.describe('testing exercises.html', function() {
 
     driver.get('http://localhost:8080/exercises.html');
 
-    driver.findElement({css: '#exercise-table tbody tr td:nth-child(1)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#exercises-table tbody tr td:nth-child(1)'}).getText().then(function(textValue) {
       assert.equal(textValue, 'running');
     })
 
-    driver.findElement({css: '#exercise-table tbody tr td:nth-child(2)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#exercises-table tbody tr td:nth-child(2)'}).getText().then(function(textValue) {
       assert.equal(textValue, '300');
     })
   });
@@ -131,37 +131,37 @@ test.describe('testing exercises.html', function() {
     calories.sendKeys('23');
     submitButton.click();
 
-    driver.findElement({css: '#exercise-table tbody tr:nth-of-type(1) td:nth-child(1)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#exercises-table tbody tr:nth-of-type(1) td:nth-child(1)'}).getText().then(function(textValue) {
       assert.equal(textValue, 'basketball');
     })
 
-    driver.findElement({css: '#exercise-table tbody tr:nth-of-type(1) td:nth-child(2)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#exercises-table tbody tr:nth-of-type(1) td:nth-child(2)'}).getText().then(function(textValue) {
       assert.equal(textValue, '23');
     })
 
-    driver.findElement({css: '#exercise-table tbody tr:nth-of-type(2) td:nth-child(1)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#exercises-table tbody tr:nth-of-type(2) td:nth-child(1)'}).getText().then(function(textValue) {
       assert.equal(textValue, 'running');
     })
 
-    driver.findElement({css: '#exercise-table tbody tr:nth-of-type(2) td:nth-child(2)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#exercises-table tbody tr:nth-of-type(2) td:nth-child(2)'}).getText().then(function(textValue) {
       assert.equal(textValue, '300');
     })
 
     driver.get('http://localhost:8080/exercises.html');
 
-    driver.findElement({css: '#exercise-table tbody tr:nth-of-type(1) td:nth-child(1)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#exercises-table tbody tr:nth-of-type(1) td:nth-child(1)'}).getText().then(function(textValue) {
       assert.equal(textValue, 'basketball');
     })
 
-    driver.findElement({css: '#exercise-table tbody tr:nth-of-type(1) td:nth-child(2)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#exercises-table tbody tr:nth-of-type(1) td:nth-child(2)'}).getText().then(function(textValue) {
       assert.equal(textValue, '23');
     })
 
-    driver.findElement({css: '#exercise-table tbody tr:nth-of-type(2) td:nth-child(1)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#exercises-table tbody tr:nth-of-type(2) td:nth-child(1)'}).getText().then(function(textValue) {
       assert.equal(textValue, 'running');
     })
 
-    driver.findElement({css: '#exercise-table tbody tr:nth-of-type(2) td:nth-child(2)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#exercises-table tbody tr:nth-of-type(2) td:nth-child(2)'}).getText().then(function(textValue) {
       assert.equal(textValue, '300');
     })
   })
@@ -177,7 +177,7 @@ test.describe('testing exercises.html', function() {
     calories.sendKeys('300');
     submitButton.click();
 
-    driver.findElement({css: '.delete-exercise'}).click();
+    driver.findElement({css: '.delete-exercises'}).click();
 
     driver.findElement({id: 'table-body'}).getText().then(function(value){
       expect(value).to.be.empty;
@@ -195,7 +195,7 @@ test.describe('testing exercises.html', function() {
     calories.sendKeys('300');
     submitButton.click();
 
-    var exerciseName = driver.findElement({css: '#exercise-table tbody tr:nth-of-type(1) td:nth-child(1)'});
+    var exerciseName = driver.findElement({css: '#exercises-table tbody tr:nth-of-type(1) td:nth-child(1)'});
 
     // excerciseName.click();
 
@@ -214,13 +214,13 @@ test.describe('testing exercises.html', function() {
     calories.sendKeys('300');
     submitButton.click();
 
-    var exerciseName = driver.findElement({css: '#exercise-table tbody tr:nth-of-type(1) td:nth-child(1)'});
+    var exerciseName = driver.findElement({css: '#exercises-table tbody tr:nth-of-type(1) td:nth-child(1)'});
 
     exerciseName.click();
     exerciseName.sendKeys(' hard');
     elseWhere.click();
 
-    driver.findElement({css: '#exercise-table tbody tr:nth-of-type(1) td:nth-child(1)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#exercises-table tbody tr:nth-of-type(1) td:nth-child(1)'}).getText().then(function(textValue) {
       assert.equal(textValue, 'running hard');
     })
   })
@@ -237,7 +237,7 @@ test.describe('testing exercises.html', function() {
     calories.sendKeys('300');
     submitButton.click();
 
-    var exerciseName = driver.findElement({css: '#exercise-table tbody tr:nth-of-type(1) td:nth-child(1)'});
+    var exerciseName = driver.findElement({css: '#exercises-table tbody tr:nth-of-type(1) td:nth-child(1)'});
 
     exerciseName.click();
     exerciseName.sendKeys(' hard');
@@ -245,7 +245,7 @@ test.describe('testing exercises.html', function() {
 
     driver.get('http://localhost:8080/exercises.html');
 
-    driver.findElement({css: '#exercise-table tbody tr:nth-of-type(1) td:nth-child(1)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#exercises-table tbody tr:nth-of-type(1) td:nth-child(1)'}).getText().then(function(textValue) {
       assert.equal(textValue, 'running hard');
     })
   })
