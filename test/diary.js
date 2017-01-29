@@ -40,8 +40,19 @@ test.describe('testing diary.html', function() {
     driver.findElement({id: 'date'}).getText().then(function(value) {
       assert.equal(value, yesterday);
     });
+  })
 
+  test.it('the day changes to tomorrow if I click the right arrow', function(){
+    driver.get('http://localhost:8080/');
 
+    var rightArrow  = driver.findElement({id: 'day-forward'});
+    var tomorrow  = new Date;
+    tomorrow      = new Date(tomorrow.setDate(tomorrow.getDate() + 1));
+    tomorrow      = tomorrow.toDateString();
+    rightArrow.click()
 
+    driver.findElement({id: 'date'}).getText().then(function(value) {
+      assert.equal(value, tomorrow);
+    });
   })
 })
