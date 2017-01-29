@@ -250,7 +250,7 @@ test.describe('testing exercises.html', function() {
     })
   })
 
-  test.it('can filter by name', function() {
+  test.xit('can filter by name', function() {
     driver.get('http://localhost:8080/exercises.html');
 
     var data = JSON.stringify([{name: 'running', calories: '300'}, {name: 'swimming', calories: '400'}]);
