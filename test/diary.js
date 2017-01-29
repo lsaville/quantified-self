@@ -27,4 +27,21 @@ test.describe('testing diary.html', function() {
       assert.equal(value, dateToday.toDateString())
     })
   })
+
+  test.it('the day changes to yesterday if I click the left arrow', function(){
+    driver.get('http://localhost:8080/');
+
+    var leftArrow  = driver.findElement({id: 'day-back'});
+    var yesterday  = new Date;
+    yesterday      = new Date(yesterday.setDate(yesterday.getDate() - 1));
+    yesterday      = yesterday.toDateString();
+    leftArrow.click()
+
+    driver.findElement({id: 'date'}).getText().then(function(value) {
+      assert.equal(value, yesterday);
+    });
+
+
+
+  })
 })
