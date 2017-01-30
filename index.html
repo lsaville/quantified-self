@@ -10,8 +10,20 @@
 
 
    <div class='container'>
-    <h1>Diary</h1>
-    <div>future buttons that change the date</div>
+
+    <div class='row'>
+      <div class='date-box col s8 offset-s2'>
+        <div class='left'>
+          <a href="#" id='day-back'> <i class="arrow large material-icons">arrow_back</i> </a>
+        </div>
+        <div class='left'>
+          <h1 id='date'>Today's Date</h1>
+        </div>
+        <div class='left'>
+          <a href="#" id='day-forward'> <i class="arrow large material-icons">arrow_forward</i> </a>
+        </div>
+      </div>
+    </div>
 
     <div class='row'>
       <div class='col s4 offset-s1'>
@@ -53,7 +65,7 @@
         </div>
 
       </div>
-    
+
       <div class='col s4 offset-s1'>
 
         <div>
@@ -91,16 +103,16 @@
             </tbody>
           </table>
         </div>
-      
+
       </div>
-    </div>  
+    </div>
 
 
     <div class='row'>
       <div class='col s4 offset-s1'>
-        
+
         <h3>Foods</h3>
-        <a href='/foods.html' class="waves-effect waves-light btn">Create New</a>
+        <a href='./foods.html' class="waves-effect waves-light btn">Create New</a>
         <p>Add Selected To</p>
         <div class='row'>
           <div class='col s6'>
@@ -119,11 +131,11 @@
           </div>
         </div>
 
-              
+
 
         <p>Filter by Name</p>
         <div class="input-field">
-          <input placeholder="Food Name">
+          <input id='food-name-filter' type='text' name='food-name-filter' placeholder="Filter by Name">
         </div>
         <table id='diary-foods-table' class='diary-foods bordered highlight'>
           <thead>
@@ -131,7 +143,7 @@
             <th>Name</th>
             <th>Calories</th>
           </thead>
-          <tbody>
+          <tbody id='food-table-body'>
           </tbody>
         </table>
       </div>
@@ -143,7 +155,7 @@
 
         <div class='row'>
           <div class='col s6'>
-            <a href='/exercises.html' class="waves-effect waves-light btn">Create New</a>
+            <a href='./exercises.html' class="waves-effect waves-light btn">Create New</a>
           </div>
           <div class='col s6'>
             <a href='#' class="waves-effect waves-light btn">Add Selected</a>
@@ -152,14 +164,14 @@
 
         <p>Filter by Name</p>
         <div class="input-field">
-          <input placeholder="Exercise Name">
+          <input id='exercise-name-filter' type='text' name='exercise-name-filter' placeholder="Filter by Name">
         </div>
         <table id='diary-exercises-table' class='diary-exercises bordered highlight'>
           <thead>
             <th>Name</th>
             <th>Calories</th>
           </thead>
-          <tbody>
+          <tbody id='exercise-table-body'>
           </tbody>
         </table>
       </div>
