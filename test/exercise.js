@@ -259,7 +259,7 @@ test.describe('testing exercises.html', function() {
 
     driver.get('http://localhost:8080/exercises.html');
 
-    var filterInput = driver.findElement({css: '#name-filter'});
+    var filterInput = driver.findElement({css: '#exercise-name-filter'});
     filterInput.click();
     filterInput.sendKeys('S');
 
