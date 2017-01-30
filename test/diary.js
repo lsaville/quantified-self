@@ -17,7 +17,7 @@ test.describe('testing diary.html', function() {
     driver.quit();
   })
 
-  test.it('shows me todays date', function() {
+  test.xit('shows me todays date', function() {
     driver.get('http://localhost:8080/');
 
     var dateOnPage = driver.findElement({id: 'date'});
@@ -28,7 +28,7 @@ test.describe('testing diary.html', function() {
     })
   })
 
-  test.it('the day changes to yesterday if I click the left arrow', function(){
+  test.xit('the day changes to yesterday if I click the left arrow', function(){
     driver.get('http://localhost:8080/');
 
     var leftArrow  = driver.findElement({id: 'day-back'});
@@ -42,7 +42,7 @@ test.describe('testing diary.html', function() {
     });
   })
 
-  test.it('the day changes to tomorrow if I click the right arrow', function(){
+  test.xit('the day changes to tomorrow if I click the right arrow', function(){
     driver.get('http://localhost:8080/');
 
     var rightArrow  = driver.findElement({id: 'day-forward'});
@@ -54,5 +54,41 @@ test.describe('testing diary.html', function() {
     driver.findElement({id: 'date'}).getText().then(function(value) {
       assert.equal(value, tomorrow);
     });
+  })
+
+  test.it('can search through the exercises', function(){
+    driver.get('http://localhost:8080/');
+
+    var data = JSON.stringify([{name: 'running', calories: '300'}, {name: 'swimming', calories: '400'}]);
+    driver.executeScript("window.localStorage.setItem('exercises','" +data+ "');");
+
+    driver.get('http://localhost:8080/');
+
+    var searchInput = driver.findElement({css: '#exercise-name-filter'});
+    searchInput.click();
+    searchInput.sendKeys('R');
+
+    driver.findElement({css: '#exercise-table-body'}).getText().then(function(value) {
+      assert.include(value, 'running');
+      assert.notInclude(value, 'swimming');
+    })
+  })
+
+  test.it('can search through the foods', function(){
+    driver.get('http://localhost:8080/');
+
+    var data = JSON.stringify([{name: 'chocolate cake', calories: '3000'}, {name: 'rice', calories: '40'}]);
+    driver.executeScript("window.localStorage.setItem('foods','" +data+ "');");
+
+    driver.get('http://localhost:8080/');
+
+    var searchInput = driver.findElement({css: '#food-name-filter'});
+    searchInput.click();
+    searchInput.sendKeys('R');
+
+    driver.findElement({css: '#food-table-body'}).getText().then(function(value) {
+      assert.include(value, 'rice');
+      assert.notInclude(value, 'chocolate cake');
+    })
   })
 })
