@@ -56,7 +56,7 @@ test.describe('testing diary.html', function() {
     });
   })
 
-  test.it('can search through the exercises', function(){
+  test.xit('can search through the exercises', function(){
     driver.get('http://localhost:8080/');
 
     var data = JSON.stringify([{name: 'running', calories: '300'}, {name: 'swimming', calories: '400'}]);
@@ -74,7 +74,7 @@ test.describe('testing diary.html', function() {
     })
   })
 
-  test.it('can search through the foods', function(){
+  test.xit('can search through the foods', function(){
     driver.get('http://localhost:8080/');
 
     var data = JSON.stringify([{name: 'chocolate cake', calories: '3000'}, {name: 'rice', calories: '40'}]);
