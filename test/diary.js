@@ -2,7 +2,8 @@ var assert    = require('chai').assert;
 var expect    = require('chai').expect;
 var webdriver = require('selenium-webdriver');
 var test      = require('selenium-webdriver/testing');
-var until     =  webdriver.until;
+var $         = require('jquery');
+var until     = webdriver.until;
 
 test.describe('testing diary.html', function() {
   var driver;
@@ -92,6 +93,338 @@ test.describe('testing diary.html', function() {
       assert.notInclude(value, 'chocolate cake');
     })
   })
+
+test.xit('each meal table has a list of food and calories', function(){
+    driver.get('http://localhost:8080/');
+
+    var data = JSON.stringify([{name: 'rice', calories: '40'}]);
+    driver.executeScript("window.localStorage.setItem('breakfast','" +data+ "');");
+    driver.executeScript("window.localStorage.setItem('lunch','" +data+ "');");
+    driver.executeScript("window.localStorage.setItem('dinner','" +data+ "');");
+    driver.executeScript("window.localStorage.setItem('snacks','" +data+ "');");
+
+    driver.get('http://localhost:8080/');
+
+    driver.findElement({css: '#breakfast-table'}).getText().then(function(value) {
+      assert.include(value, 'rice');
+      assert.include(value, '40');
+    });
+
+    driver.findElement({css: '#lunch-table'}).getText().then(function(value) {
+      assert.include(value, 'rice');
+      assert.include(value, '40');
+    });
+
+    driver.findElement({css: '#dinner-table'}).getText().then(function(value) {
+      assert.include(value, 'rice');
+      assert.include(value, '40');
+    });
+
+    driver.findElement({css: '#snacks-table'}).getText().then(function(value) {
+      assert.include(value, 'rice');
+      assert.include(value, '40');
+    });
+  });
+
+  test.xit('exercise table has a list of exercise and calories', function(){
+    driver.get('http://localhost:8080/');
+
+    var data = JSON.stringify([{name: 'running', calories: '400'}]);
+    driver.executeScript("window.localStorage.setItem('exercise','" +data+ "');");
+
+    driver.get('http://localhost:8080/');
+
+    driver.findElement({css: '#exercise-table'}).getText().then(function(value) {
+      assert.include(value, 'running');
+      assert.include(value, '400');
+    });
+  });
+
+  test.xit('foods table in Diary', function(){
+    driver.get('http://localhost:8080/');
+
+    var data = JSON.stringify([{name: 'Apple', calories: '40'}]);
+    driver.executeScript("window.localStorage.setItem('foods','" +data+ "');");
+
+    driver.get('http://localhost:8080/');
+
+    driver.findElement({css: '#diary-foods-table'}).getText().then(function(value) {
+      assert.include(value, 'Apple');
+      assert.include(value, '40');
+    });
+  });
+
+  test.xit('Exercises table in Diary', function(){
+    driver.get('http://localhost:8080/');
+
+    var data = JSON.stringify([{name: 'Running', calories: '400'}]);
+    driver.executeScript("window.localStorage.setItem('exercises','" +data+ "');");
+
+    driver.get('http://localhost:8080/');
+
+    driver.findElement({css: '#diary-exercises-table'}).getText().then(function(value) {
+      assert.include(value, 'Running');
+      assert.include(value, '40');
+    });
+  });
+
+  test.xit('Removing deleted foods from diary removes from meal table but not foods table', function(){
+    
+    driver.get('http://localhost:8080/');
+
+    var data = JSON.stringify([{name: 'Apple', calories: '40'}]);
+    driver.executeScript("window.localStorage.setItem('foods','" +data+ "');");
+    driver.executeScript("window.localStorage.setItem('breakfast','" +data+ "');");
+    driver.executeScript("window.localStorage.setItem('lunch','" +data+ "');");
+    driver.executeScript("window.localStorage.setItem('dinner','" +data+ "');");
+    driver.executeScript("window.localStorage.setItem('snacks','" +data+ "');");
+
+    driver.get('http://localhost:8080/');
+
+    driver.findElement({css: '#breakfast-table'}).getText().then(function(value) {
+      assert.include(value, 'Apple');
+      assert.include(value, '40');
+    });
+
+    driver.findElement({css: '#lunch-table'}).getText().then(function(value) {
+      assert.include(value, 'Apple');
+      assert.include(value, '40');
+    });
+
+    driver.findElement({css: '#dinner-table'}).getText().then(function(value) {
+      assert.include(value, 'Apple');
+      assert.include(value, '40');
+    });
+
+    driver.findElement({css: '#snacks-table'}).getText().then(function(value) {
+      assert.include(value, 'Apple');
+      assert.include(value, '40');
+    });
+
+    driver.findElement({css: '#diary-foods-table'}).getText().then(function(value) {
+      assert.include(value, 'Apple');
+      assert.include(value, '40');
+    });
+    driver.findElement({css: '.delete-breakfast'}).click();
+
+    driver.findElement({css: '#breakfast-table'}).getText().then(function(value) {
+      assert.notInclude(value, 'Apple');
+      assert.notInclude(value, '40');
+    });
+
+    driver.findElement({css: '#diary-foods-table'}).getText().then(function(value) {
+      assert.include(value, 'Apple');
+      assert.include(value, '40');
+    });
+
+    driver.findElement({css: '.delete-lunch'}).click();
+
+    driver.findElement({css: '#lunch-table'}).getText().then(function(value) {
+      assert.notInclude(value, 'Apple');
+      assert.notInclude(value, '40');
+    });
+
+    driver.findElement({css: '#diary-foods-table'}).getText().then(function(value) {
+      assert.include(value, 'Apple');
+      assert.include(value, '40');
+    });
+
+    driver.findElement({css: '.delete-dinner'}).click();
+
+    driver.findElement({css: '#dinner-table'}).getText().then(function(value) {
+      assert.notInclude(value, 'Apple');
+      assert.notInclude(value, '40');
+    });
+
+    driver.findElement({css: '#diary-foods-table'}).getText().then(function(value) {
+      assert.include(value, 'Apple');
+      assert.include(value, '40');
+    });
+
+    driver.findElement({css: '.delete-snacks'}).click();
+
+    driver.findElement({css: '#snacks-table'}).getText().then(function(value) {
+      assert.notInclude(value, 'Apple');
+      assert.notInclude(value, '40');
+    });
+
+    driver.findElement({css: '#diary-foods-table'}).getText().then(function(value) {
+      assert.include(value, 'Apple');
+      assert.include(value, '40');
+    });
+  });
+
+  test.xit('Add meal to diary', function(){
+    driver.get('http://localhost:8080/');
+
+    var data = JSON.stringify([{name: 'Apple', calories: '40'}]);
+    driver.executeScript("window.localStorage.setItem('foods','" +data+ "');");
+
+    driver.get('http://localhost:8080/');
+
+    elementChkBox = driver.findElement({css: 'input[type=checkbox]'})
+    
+    driver.executeScript("arguments[0].click();", elementChkBox);
+
+    driver.findElement({css: '#add-to-breakfast'}).click();
+
+    driver.findElement({css: '#breakfast-table'}).getText().then(function(value) {
+      assert.include(value, 'Apple');
+      assert.include(value, '40');
+    });
+
+    driver.executeScript("arguments[0].click();", elementChkBox);
+
+    driver.findElement({css: '#add-to-lunch'}).click();
+
+    driver.findElement({css: '#lunch-table'}).getText().then(function(value) {
+      assert.include(value, 'Apple');
+      assert.include(value, '40');
+    });
+
+    driver.executeScript("arguments[0].click();", elementChkBox);
+
+    driver.findElement({css: '#add-to-dinner'}).click();
+
+    driver.findElement({css: '#dinner-table'}).getText().then(function(value) {
+      assert.include(value, 'Apple');
+      assert.include(value, '40');
+    });
+
+    driver.executeScript("arguments[0].click();", elementChkBox);
+
+    driver.findElement({css: '#add-to-snacks'}).click();
+
+    driver.findElement({css: '#snacks-table'}).getText().then(function(value) {
+      assert.include(value, 'Apple');
+      assert.include(value, '40');
+    });
+  });
+
+  test.xit('Persisting diary across refreshes', function(){
+    driver.get('http://localhost:8080/');
+
+    var data = JSON.stringify([{name: 'Apple', calories: '40'}]);
+    driver.executeScript("window.localStorage.setItem('foods','" +data+ "');");
+
+    driver.get('http://localhost:8080/');
+
+    elementChkBox = driver.findElement({css: 'input[type=checkbox]'})
+    
+    driver.executeScript("arguments[0].click();", elementChkBox);
+    driver.findElement({css: '#add-to-breakfast'}).click();
+
+    driver.executeScript("arguments[0].click();", elementChkBox);
+    driver.findElement({css: '#add-to-lunch'}).click();
+    
+    driver.executeScript("arguments[0].click();", elementChkBox);
+    driver.findElement({css: '#add-to-dinner'}).click();
+
+    driver.executeScript("arguments[0].click();", elementChkBox);
+    driver.findElement({css: '#add-to-snacks'}).click();
+
+    driver.get('http://localhost:8080/');
+
+    driver.findElement({css: '#breakfast-table'}).getText().then(function(value) {
+      assert.include(value, 'Apple');
+      assert.include(value, '40');
+    });
+
+    driver.findElement({css: '#lunch-table'}).getText().then(function(value) {
+      assert.include(value, 'Apple');
+      assert.include(value, '40');
+    });
+
+    driver.findElement({css: '#dinner-table'}).getText().then(function(value) {
+      assert.include(value, 'Apple');
+      assert.include(value, '40');
+    });
+
+    driver.findElement({css: '#snacks-table'}).getText().then(function(value) {
+      assert.include(value, 'Apple');
+      assert.include(value, '40');
+    });
+
+    driver.findElement({css: '.delete-breakfast'}).click();
+    driver.findElement({css: '.delete-lunch'}).click();
+    driver.findElement({css: '.delete-dinner'}).click();
+    driver.findElement({css: '.delete-snacks'}).click();
+
+    driver.get('http://localhost:8080/');
+
+    driver.findElement({css: '#breakfast-table'}).getText().then(function(value) {
+      assert.notInclude(value, 'Apple');
+      assert.notInclude(value, '40');
+    });
+
+    driver.findElement({css: '#lunch-table'}).getText().then(function(value) {
+      assert.notInclude(value, 'Apple');
+      assert.notInclude(value, '40');
+    });
+
+    driver.findElement({css: '#dinner-table'}).getText().then(function(value) {
+      assert.notInclude(value, 'Apple');
+      assert.notInclude(value, '40');
+    });
+
+    driver.findElement({css: '#snacks-table'}).getText().then(function(value) {
+      assert.notInclude(value, 'Apple');
+      assert.notInclude(value, '40');
+    });
+  });
+
+  test.xit('Add exercise to diary', function(){
+    driver.get('http://localhost:8080/');
+
+    var data = JSON.stringify([{name: 'Running', calories: '400'}]);
+    driver.executeScript("window.localStorage.setItem('exercises','" +data+ "');");
+
+    driver.get('http://localhost:8080/');
+
+    elementChkBox = driver.findElement({css: 'input[type=checkbox]'})
+    
+    driver.executeScript("arguments[0].click();", elementChkBox);
+
+    driver.findElement({css: '#add-to-exercise'}).click();
+
+    driver.findElement({css: '#exercise-table'}).getText().then(function(value) {
+      assert.include(value, 'Running');
+      assert.include(value, '400');
+    });
+  });
+
+  test.xit('Removing deleted exercises from diary removes from exercise table but not exercises table', function(){
+    
+    driver.get('http://localhost:8080/');
+
+    var data = JSON.stringify([{name: 'Running', calories: '400'}]);
+    driver.executeScript("window.localStorage.setItem('exercises','" +data+ "');");
+    driver.executeScript("window.localStorage.setItem('exercise','" +data+ "');");
+
+    driver.get('http://localhost:8080/');
+
+    driver.findElement({css: '#exercise-table'}).getText().then(function(value) {
+      assert.include(value, 'Running');
+      assert.include(value, '40');
+    });
+
+    driver.findElement({css: '#diary-exercises-table'}).getText().then(function(value) {
+      assert.include(value, 'Running');
+      assert.include(value, '400');
+    });
+
+    driver.findElement({css: '.delete-exercise'}).click();
+
+    driver.findElement({css: '#exercise-table'}).getText().then(function(value) {
+      assert.notInclude(value, 'Running');
+      assert.notInclude(value, '400');
+    });
+
+    driver.findElement({css: '#diary-exercises-table'}).getText().then(function(value) {
+      assert.include(value, 'Running');
+      assert.include(value, '400');
+    });
+  });
 
   test.it('has total calories for breakfast', function(){
     driver.get('http://localhost:8080/');
