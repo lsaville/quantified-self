@@ -93,21 +93,20 @@ test.describe('testing diary.html', function() {
     })
   })
 
-  test.xit('has total calories for breakfast', function(){
+  test.it('has total calories for breakfast', function(){
     driver.get('http://localhost:8080/');
 
     var data = JSON.stringify([{name: 'banana', calories: '30'}, {name: 'Chocolate', calories: '400'}]);
     driver.executeScript("window.localStorage.setItem('foods','" +data+ "');");
 
     driver.get('http://localhost:8080/');
-    // var button = driver.wait(until.elementLocated(By.id('foo')), 10000);
-    addToBreakfastButton  = driver.findElement({id: '#add-to-breakfast'});
-    // bananaCheckbox        = driver.findElement({css: '#banana'});
-    bananaCheckbox        = driver.wait(until.elementLocated({css: '#banana'}, 100000));
-    // chocolateCakeCheckbox = driver.findElement({css: '#Chocolate'});
 
-    bananaCheckbox.click();
-    // chocolateCakeCheckbox.click();
+    addToBreakfastButton = driver.findElement({id: 'add-to-breakfast'});
+    bananaCheckBox       = driver.findElement({css: 'input#banana'});
+    chocolateCheckBox    = driver.findElement({css: 'input#Chocolate'}) ;
+
+    driver.executeScript("arguments[0].click();", bananaCheckBox);
+    driver.executeScript("arguments[0].click();", chocolateCheckBox);
     addToBreakfastButton.click();
 
     driver.findElement({css: '#breakfast-total-calories'}).getText().then(function(value){
