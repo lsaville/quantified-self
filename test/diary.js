@@ -2,10 +2,11 @@ var assert    = require('chai').assert;
 var expect    = require('chai').expect;
 var webdriver = require('selenium-webdriver');
 var test      = require('selenium-webdriver/testing');
+var until     =  webdriver.until;
 
 test.describe('testing diary.html', function() {
   var driver;
-  this.timeout(10000);
+  this.timeout(1000000);
 
   test.beforeEach(function() {
     driver = new webdriver.Builder()
@@ -99,13 +100,13 @@ test.describe('testing diary.html', function() {
     driver.executeScript("window.localStorage.setItem('foods','" +data+ "');");
 
     driver.get('http://localhost:8080/');
-// driver.sleep(1000000)
-    addToBreakfastButton  = driver.findElement({id: '#add-to-breakfast'})
-    bananaCheckbox        = driver.findElement({id: 'input#banana'});
-    chocolateCakeCheckbox = driver.findElement({id: 'input#Chocolate'});
 
-    bananaCheckbox.click();
-    chocolateCakeCheckbox.click();
+    addToBreakfastButton = driver.findElement({id: 'add-to-breakfast'});
+    bananaCheckBox       = driver.findElement({css: 'input#banana'});
+    chocolateCheckBox    = driver.findElement({css: 'input#Chocolate'}) ;
+
+    driver.executeScript("arguments[0].click();", bananaCheckBox);
+    driver.executeScript("arguments[0].click();", chocolateCheckBox);
     addToBreakfastButton.click();
 
     driver.findElement({css: '#breakfast-total-calories'}).getText().then(function(value){

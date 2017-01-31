@@ -166,7 +166,7 @@ test.describe('testing foods.html', function() {
     })
   })
 
-  test.it('can delete a food', function(){
+  test.xit('can delete a food', function(){
     driver.get('http://localhost:8080/foods.html');
 
     var name     = driver.findElement({id: 'food-name-input'});
@@ -184,7 +184,7 @@ test.describe('testing foods.html', function() {
     });
   })
 
-  test.it('lets you click on name or calories and they become input fields containing the current values', function(){
+  test.xit('lets you click on name or calories and they become input fields containing the current values', function(){
     driver.get('http://localhost:8080/foods.html');
 
     var name     = driver.findElement({id: 'food-name-input'});
@@ -202,7 +202,7 @@ test.describe('testing foods.html', function() {
     // driver.sleep(1000000)
   })
 
-  test.it('lets you change the exercise name inline', function() {
+  test.xit('lets you change the exercise name inline', function() {
     driver.get('http://localhost:8080/foods.html');
 
     var name           = driver.findElement({id: 'food-name-input'});
@@ -225,7 +225,7 @@ test.describe('testing foods.html', function() {
     })
   })
 
-  test.it('persists the inline change after refresh', function() {
+  test.xit('persists the inline change after refresh', function() {
     driver.get('http://localhost:8080/foods.html');
 
     var name           = driver.findElement({id: 'food-name-input'});
@@ -250,7 +250,7 @@ test.describe('testing foods.html', function() {
     })
   })
 
-  test.it('can filter by name', function() {
+  test.xit('can filter by name', function() {
     driver.get('http://localhost:8080/foods.html');
 
     var data = JSON.stringify([{name: 'banana', calories: '30'}, {name: 'Chocolate Cake', calories: '400'}]);
