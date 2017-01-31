@@ -5,7 +5,7 @@ var test      = require('selenium-webdriver/testing');
 
 test.describe('testing foods.html', function() {
   var driver;
-  this.timeout(10000);
+  this.timeout(1000000);
 
   test.beforeEach(function() {
     driver = new webdriver.Builder()
@@ -47,11 +47,11 @@ test.describe('testing foods.html', function() {
     calories.sendKeys('30');
     submitButton.click();
 
-    driver.findElement({css: '#food-table tbody tr td:nth-child(1)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#foods-table tbody tr td:nth-child(1)'}).getText().then(function(textValue) {
       assert.equal(textValue, 'banana');
     })
 
-    driver.findElement({css: '#food-table tbody tr td:nth-child(2)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#foods-table tbody tr td:nth-child(2)'}).getText().then(function(textValue) {
       assert.equal(textValue, '30');
     })
   });
@@ -65,11 +65,11 @@ test.describe('testing foods.html', function() {
 
     driver.get('http://localhost:8080/foods.html');
 
-    driver.findElement({css: '#food-table tbody tr td:nth-child(1)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#foods-table tbody tr td:nth-child(1)'}).getText().then(function(textValue) {
       assert.equal(textValue, 'banana');
     })
 
-    driver.findElement({css: '#food-table tbody tr td:nth-child(2)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#foods-table tbody tr td:nth-child(2)'}).getText().then(function(textValue) {
       assert.equal(textValue, '30');
     })
   });
@@ -111,7 +111,7 @@ test.describe('testing foods.html', function() {
     name.sendKeys('banana');
     submitButton.click();
 
-    driver.findElement({id: 'table-body'}).getText().then(function(value){
+    driver.findElement({id: 'food-table-body'}).getText().then(function(value){
       expect(value).to.be.empty;
     });
   });
@@ -131,42 +131,42 @@ test.describe('testing foods.html', function() {
     calories.sendKeys('600');
     submitButton.click();
 
-    driver.findElement({css: '#food-table tbody tr:nth-of-type(1) td:nth-child(1)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#foods-table tbody tr:nth-of-type(1) td:nth-child(1)'}).getText().then(function(textValue) {
       assert.equal(textValue, 'berries');
     })
 
-    driver.findElement({css: '#food-table tbody tr:nth-of-type(1) td:nth-child(2)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#foods-table tbody tr:nth-of-type(1) td:nth-child(2)'}).getText().then(function(textValue) {
       assert.equal(textValue, '600');
     })
 
-    driver.findElement({css: '#food-table tbody tr:nth-of-type(2) td:nth-child(1)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#foods-table tbody tr:nth-of-type(2) td:nth-child(1)'}).getText().then(function(textValue) {
       assert.equal(textValue, 'banana');
     })
 
-    driver.findElement({css: '#food-table tbody tr:nth-of-type(2) td:nth-child(2)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#foods-table tbody tr:nth-of-type(2) td:nth-child(2)'}).getText().then(function(textValue) {
       assert.equal(textValue, '30');
     })
 
     driver.get('http://localhost:8080/foods.html');
 
-    driver.findElement({css: '#food-table tbody tr:nth-of-type(1) td:nth-child(1)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#foods-table tbody tr:nth-of-type(1) td:nth-child(1)'}).getText().then(function(textValue) {
       assert.equal(textValue, 'berries');
     })
 
-    driver.findElement({css: '#food-table tbody tr:nth-of-type(1) td:nth-child(2)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#foods-table tbody tr:nth-of-type(1) td:nth-child(2)'}).getText().then(function(textValue) {
       assert.equal(textValue, '600');
     })
 
-    driver.findElement({css: '#food-table tbody tr:nth-of-type(2) td:nth-child(1)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#foods-table tbody tr:nth-of-type(2) td:nth-child(1)'}).getText().then(function(textValue) {
       assert.equal(textValue, 'banana');
     })
 
-    driver.findElement({css: '#food-table tbody tr:nth-of-type(2) td:nth-child(2)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#foods-table tbody tr:nth-of-type(2) td:nth-child(2)'}).getText().then(function(textValue) {
       assert.equal(textValue, '30');
     })
   })
 
-  test.xit('can delete an food', function(){
+  test.it('can delete a food', function(){
     driver.get('http://localhost:8080/foods.html');
 
     var name     = driver.findElement({id: 'food-name-input'});
@@ -177,32 +177,32 @@ test.describe('testing foods.html', function() {
     calories.sendKeys('30');
     submitButton.click();
 
-    driver.findElement({css: '.delete-food'}).click();
+    driver.findElement({css: '.delete-foods'}).click();
 
-    driver.findElement({id: 'table-body'}).getText().then(function(value){
+    driver.findElement({id: 'food-table-body'}).getText().then(function(value){
       expect(value).to.be.empty;
     });
   })
 
-  test.xit('lets you click on name or calories and they become input fields containing the current values', function(){
+  test.it('lets you click on name or calories and they become input fields containing the current values', function(){
     driver.get('http://localhost:8080/foods.html');
 
     var name     = driver.findElement({id: 'food-name-input'});
     var calories = driver.findElement({id: 'food-calories-input'});
     var submitButton   = driver.findElement({id: 'add-food'});
 
-    name.sendKeys('running');
-    calories.sendKeys('300');
+    name.sendKeys('banana');
+    calories.sendKeys('30');
     submitButton.click();
 
-    var foodName = driver.findElement({css: '#exercise-table tbody tr:nth-of-type(1) td:nth-child(1)'});
+    var foodName = driver.findElement({css: '#foods-table tbody tr:nth-of-type(1) td:nth-child(1)'});
 
     // excerciseName.click();
 
     // driver.sleep(1000000)
   })
 
-  test.xit('lets you change the exercise name inline', function() {
+  test.it('lets you change the exercise name inline', function() {
     driver.get('http://localhost:8080/foods.html');
 
     var name           = driver.findElement({id: 'food-name-input'});
@@ -214,18 +214,18 @@ test.describe('testing foods.html', function() {
     calories.sendKeys('30');
     submitButton.click();
 
-    var foodName = driver.findElement({css: '#food-table tbody tr:nth-of-type(1) td:nth-child(1)'});
+    var foodName = driver.findElement({css: '#foods-table tbody tr:nth-of-type(1) td:nth-child(1)'});
 
     foodName.click();
     foodName.sendKeys(' split');
     elseWhere.click();
 
-    driver.findElement({css: '#food-table tbody tr:nth-of-type(1) td:nth-child(1)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#foods-table tbody tr:nth-of-type(1) td:nth-child(1)'}).getText().then(function(textValue) {
       assert.equal(textValue, 'banana split');
     })
   })
 
-  test.xit('persists the inline change after refresh', function() {
+  test.it('persists the inline change after refresh', function() {
     driver.get('http://localhost:8080/foods.html');
 
     var name           = driver.findElement({id: 'food-name-input'});
@@ -237,7 +237,7 @@ test.describe('testing foods.html', function() {
     calories.sendKeys('30');
     submitButton.click();
 
-    var foodName = driver.findElement({css: '#food-table tbody tr:nth-of-type(1) td:nth-child(1)'});
+    var foodName = driver.findElement({css: '#foods-table tbody tr:nth-of-type(1) td:nth-child(1)'});
 
     foodName.click();
     foodName.sendKeys(' split');
@@ -245,10 +245,11 @@ test.describe('testing foods.html', function() {
 
     driver.get('http://localhost:8080/foods.html');
 
-    driver.findElement({css: '#food-table tbody tr:nth-of-type(1) td:nth-child(1)'}).getText().then(function(textValue) {
+    driver.findElement({css: '#foods-table tbody tr:nth-of-type(1) td:nth-child(1)'}).getText().then(function(textValue) {
       assert.equal(textValue, 'banana split');
     })
   })
+
   test.it('can filter by name', function() {
     driver.get('http://localhost:8080/foods.html');
 
@@ -258,12 +259,12 @@ test.describe('testing foods.html', function() {
 
     driver.get('http://localhost:8080/foods.html');
 
-    var filterInput = driver.findElement({css: '#name-filter'});
+    var filterInput = driver.findElement({css: '#food-name-filter'});
     filterInput.click();
     filterInput.sendKeys('B');
 
 
-    driver.findElement({css: '#table-body'}).getText().then(function(textValue) {
+    driver.findElement({css: '#food-table-body'}).getText().then(function(textValue) {
       assert.include(textValue, 'banana');
       assert.notInclude(textValue, 'Chocolate Cake');
     })
