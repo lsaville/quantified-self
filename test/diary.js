@@ -446,4 +446,25 @@ test.xit('each meal table has a list of food and calories', function(){
       assert.equal(value, '430');
     })
   })
+
+  test.it('has remaining calories for breakfast', function(){
+    driver.get('http://localhost:8080/');
+
+    var data = JSON.stringify([{name: 'banana', calories: '30'}, {name: 'Chocolate', calories: '300'}]);
+    driver.executeScript("window.localStorage.setItem('foods','" +data+ "');");
+
+    driver.get('http://localhost:8080/');
+
+    addToBreakfastButton = driver.findElement({id: 'add-to-breakfast'});
+    bananaCheckBox       = driver.findElement({css: 'input#banana'});
+    chocolateCheckBox    = driver.findElement({css: 'input#Chocolate'}) ;
+
+    driver.executeScript("arguments[0].click();", bananaCheckBox);
+    driver.executeScript("arguments[0].click();", chocolateCheckBox);
+    addToBreakfastButton.click();
+
+    driver.findElement({css: '#breakfast-remaining-calories'}).getText().then(function(value){
+      assert.equal(value, '70');
+    })
+  })
 })
