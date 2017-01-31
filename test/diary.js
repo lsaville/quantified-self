@@ -425,4 +425,24 @@ test.xit('each meal table has a list of food and calories', function(){
     });
   });
 
+  test.it('has total calories for breakfast', function(){
+    driver.get('http://localhost:8080/');
+
+    var data = JSON.stringify([{name: 'banana', calories: '30'}, {name: 'Chocolate', calories: '400'}]);
+    driver.executeScript("window.localStorage.setItem('foods','" +data+ "');");
+
+    driver.get('http://localhost:8080/');
+// driver.sleep(1000000)
+    addToBreakfastButton  = driver.findElement({id: '#add-to-breakfast'})
+    bananaCheckbox        = driver.findElement({id: 'input#banana'});
+    chocolateCakeCheckbox = driver.findElement({id: 'input#Chocolate'});
+
+    bananaCheckbox.click();
+    chocolateCakeCheckbox.click();
+    addToBreakfastButton.click();
+
+    driver.findElement({css: '#breakfast-total-calories'}).getText().then(function(value){
+      assert.equal(value, '430');
+    })
+  })
 })
