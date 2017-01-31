@@ -1,183 +1,217 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>Quantified Self - Diary</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</head>
-<body>
+  <head>
+    <meta charset="utf-8">
+    <title>Quantified Self - Diary</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  </head>
 
+  <body>
+     <div class='container'>
 
-   <div class='container'>
-
-    <div class='row'>
-      <div class='date-box col s9 offset-s2'>
-        <div class='left'>
-          <a href="#" id='day-back'> <i class="arrow large material-icons">arrow_back</i> </a>
+      <div class='row'>
+        <div class='date-box col s8 offset-s2'>
+          <div class='left'>
+            <a href="#" id='day-back'> <i class="arrow large material-icons">arrow_back</i> </a>
+          </div>
+          <div class='left'>
+            <h1 id='date'>Today's Date</h1>
+          </div>
+          <div class='left'>
+            <a href="#" id='day-forward'> <i class="arrow large material-icons">arrow_forward</i> </a>
+          </div>
         </div>
-        <div class='left'>
-          <h1 id='date'>Today's Date</h1>
+      </div>
+
+      <div class='row'>
+        <div class='col s4 offset-s1'>
+
+          <div>
+            <h3>Breakfast</h3>
+            <table id='breakfast-table' class='breakfast bordered highlight'>
+              <thead>
+                <th>Name</th>
+                <th>Calories</th>
+              </thead>
+              <tbody id='breakfast-table-body'>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td>Total Calories</td>
+                  <td id='breakfast-total-calories'>0</td>
+                  <td></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+
+          <div>
+            <h3>Dinner</h3>
+            <table id=dinner-table class='dinner bordered highlight'>
+              <thead>
+                <th>Name</th>
+                <th>Calories</th>
+              </thead>
+              <tbody id='dinner-table-body'>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td>Total Calories</td>
+                  <td id='dinner-total-calories'>0</td>
+                  <td></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+
+          <div>
+            <h3>Exercise</h3>
+            <table id=exercise-table class='exercise bordered highlight'>
+              <thead>
+                <th>Name</th>
+                <th>Calories</th>
+              </thead>
+              <tbody id='exercise-table-body'>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td>Total Calories</td>
+                  <td id='exercise-total-calories'>0</td>
+                  <td></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+
         </div>
-        <div class='left'>
-          <a href="#" id='day-forward'> <i class="arrow large material-icons">arrow_forward</i> </a>
+
+        <div class='col s4 offset-s1'>
+
+          <div>
+            <h3>Lunch</h3>
+            <table id=lunch-table class='lunch bordered highlight'>
+              <thead>
+                <th>Name</th>
+                <th>Calories</th>
+              </thead>
+              <tbody id='lunch-table-body'>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td>Total Calories</td>
+                  <td id='lunch-total-calories'>0</td>
+                  <td></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+
+          <div>
+            <h3>Snacks</h3>
+            <table id=snacks-table class='snacks bordered highlight'>
+              <thead>
+                <th>Name</th>
+                <th>Calories</th>
+              </thead>
+              <tbody id='snacks-table-body'>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td>Total Calories</td>
+                  <td id='snacks-total-calories'>0</td>
+                  <td></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+
+          <div>
+            <h3>Totals</h3>
+            <table id=totals-table class='bordered highlight'>
+              <thead>
+                <th>Name</th>
+                <th>Calories</th>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div class='row'>
+        <div class='col s4 offset-s1'>
+
+          <h3>Foods</h3>
+          <a href='./foods.html' class="waves-effect waves-light btn">Create New</a>
+          <p>Add Selected To</p>
+          <div class='row'>
+            <div class='col s6'>
+              <a href='#' id='add-to-breakfast' class="add-breakfast waves-effect waves-light btn">Breakfast</a>
+            </div>
+            <div class='col s6'>
+                <a href='#' class="add-lunch waves-effect waves-light btn">Lunch</a>
+            </div>
+          </div>
+          <div class='row'>
+            <div class='col s6'>
+              <a href='#' class="add-dinner waves-effect waves-light btn">Dinner</a>
+            </div>
+            <div class='col s6'>
+              <a href='#' class="add-snacks waves-effect waves-light btn">Snacks</a>
+            </div>
+          </div>
+
+
+
+          <p>Filter by Name</p>
+          <div class="input-field">
+            <input id='food-name-filter' type='text' name='food-name-filter' placeholder="Filter by Name">
+          </div>
+          <table id='diary-foods-table' class='diary-foods bordered highlight'>
+            <thead>
+              <th>Name</th>
+              <th>Calories</th>
+              <th></th>
+            </thead>
+            <tbody id='food-table-body'>
+            </tbody>
+          </table>
+        </div>
+
+
+
+        <div class='col sm5 offset-s2'>
+          <h3>Exercises</h3>
+
+          <div class='row'>
+            <div class='col s6'>
+              <a href='./exercises.html' class="waves-effect waves-light btn">Create New</a>
+            </div>
+            <div class='col s6'>
+              <a href='#' class="add-exercise waves-effect waves-light btn">Add Selected</a>
+            </div>
+          </div>
+
+          <p>Filter by Name</p>
+          <div class="input-field">
+            <input id='exercise-name-filter' type='text' name='exercise-name-filter' placeholder="Filter by Name">
+          </div>
+          <table id='diary-exercises-table' class='diary-exercises bordered highlight'>
+            <thead>
+              <th>Name</th>
+              <th>Calories</th>
+            </thead>
+            <tbody id='exercise-table-body'>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
-
-    <div class='row'>
-      <div class='col s4 offset-s1'>
-
-        <div>
-          <h3>Breakfast</h3>
-          <table id='breakfast-table' class='breakfast bordered highlight'>
-            <thead>
-              <th>Name</th>
-              <th>Calories</th>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
-        </div>
-
-        <div>
-          <h3>Dinner</h3>
-          <table id=dinner-table class='dinner bordered highlight'>
-            <thead>
-              <th>Name</th>
-              <th>Calories</th>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
-        </div>
-
-        <div>
-          <h3>Excercise</h3>
-          <table id=exercise-table class='exercise bordered highlight'>
-            <thead>
-              <th>Name</th>
-              <th>Calories</th>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
-        </div>
-
-      </div>
-
-      <div class='col s4 offset-s1'>
-
-        <div>
-          <h3>Lunch</h3>
-          <table id=lunch-table class='lunch bordered highlight'>
-            <thead>
-              <th>Name</th>
-              <th>Calories</th>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
-        </div>
-
-        <div>
-          <h3>Snacks</h3>
-          <table id=snacks-table class='snacks bordered highlight'>
-            <thead>
-              <th>Name</th>
-              <th>Calories</th>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
-        </div>
-
-        <div>
-          <h3>Totals</h3>
-          <table id=totals-table class='bordered highlight'>
-            <thead>
-              <th>Name</th>
-              <th>Calories</th>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
-        </div>
-
-      </div>
-    </div>
-
-
-    <div class='row'>
-      <div class='col s4 offset-s1'>
-
-        <h3>Foods</h3>
-        <a href='./foods.html' class="waves-effect waves-light btn">Create New</a>
-        <p>Add Selected To</p>
-        <div class='row'>
-          <div class='col s6'>
-            <a href='#' class="add-breakfast waves-effect waves-light btn">Breakfast</a>
-          </div>
-          <div class='col s6'>
-              <a href='#' class="add-lunch waves-effect waves-light btn">Lunch</a>
-          </div>
-        </div>
-        <div class='row'>
-          <div class='col s6'>
-            <a href='#' class="add-dinner waves-effect waves-light btn">Dinner</a>
-          </div>
-          <div class='col s6'>
-            <a href='#' class="add-snacks waves-effect waves-light btn">Snacks</a>
-          </div>
-        </div>
-
-
-
-        <p>Filter by Name</p>
-        <div class="input-field">
-          <input id='food-name-filter' type='text' name='food-name-filter' placeholder="Filter by Name">
-        </div>
-        <table id='diary-foods-table' class='diary-foods bordered highlight'>
-          <thead>
-            <th></th>
-            <th>Name</th>
-            <th>Calories</th>
-          </thead>
-          <tbody id='food-table-body'>
-          </tbody>
-        </table>
-      </div>
-
-
-
-      <div class='col sm5 offset-s2'>
-        <h3>Exercises</h3>
-
-        <div class='row'>
-          <div class='col s6'>
-            <a href='./exercises.html' class="waves-effect waves-light btn">Create New</a>
-          </div>
-          <div class='col s6'>
-            <a href='#' class="add-exercise waves-effect waves-light btn">Add Selected</a>
-          </div>
-        </div>
-
-        <p>Filter by Name</p>
-        <div class="input-field">
-          <input id='exercise-name-filter' type='text' name='exercise-name-filter' placeholder="Filter by Name">
-        </div>
-        <table id='diary-exercises-table' class='diary-exercises bordered highlight'>
-          <thead>
-            <th>Name</th>
-            <th>Calories</th>
-          </thead>
-          <tbody id='exercise-table-body'>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-  <script src="main.bundle.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
-</body>
+    <script src="main.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+  </body>
 </html>
