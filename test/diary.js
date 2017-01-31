@@ -169,7 +169,7 @@ test.xit('each meal table has a list of food and calories', function(){
   });
 
   test.xit('Removing deleted foods from diary removes from meal table but not foods table', function(){
-    
+
     driver.get('http://localhost:8080/');
 
     var data = JSON.stringify([{name: 'Apple', calories: '40'}]);
@@ -263,7 +263,7 @@ test.xit('each meal table has a list of food and calories', function(){
     driver.get('http://localhost:8080/');
 
     elementChkBox = driver.findElement({css: 'input[type=checkbox]'})
-    
+
     driver.executeScript("arguments[0].click();", elementChkBox);
 
     driver.findElement({css: '#add-to-breakfast'}).click();
@@ -310,13 +310,13 @@ test.xit('each meal table has a list of food and calories', function(){
     driver.get('http://localhost:8080/');
 
     elementChkBox = driver.findElement({css: 'input[type=checkbox]'})
-    
+
     driver.executeScript("arguments[0].click();", elementChkBox);
     driver.findElement({css: '#add-to-breakfast'}).click();
 
     driver.executeScript("arguments[0].click();", elementChkBox);
     driver.findElement({css: '#add-to-lunch'}).click();
-    
+
     driver.executeScript("arguments[0].click();", elementChkBox);
     driver.findElement({css: '#add-to-dinner'}).click();
 
@@ -382,7 +382,7 @@ test.xit('each meal table has a list of food and calories', function(){
     driver.get('http://localhost:8080/');
 
     elementChkBox = driver.findElement({css: 'input[type=checkbox]'})
-    
+
     driver.executeScript("arguments[0].click();", elementChkBox);
 
     driver.findElement({css: '#add-to-exercise'}).click();
@@ -394,7 +394,7 @@ test.xit('each meal table has a list of food and calories', function(){
   });
 
   test.xit('Removing deleted exercises from diary removes from exercise table but not exercises table', function(){
-    
+
     driver.get('http://localhost:8080/');
 
     var data = JSON.stringify([{name: 'Running', calories: '400'}]);
@@ -426,7 +426,7 @@ test.xit('each meal table has a list of food and calories', function(){
     });
   });
 
-  test.it('has total calories for breakfast', function(){
+  test.xit('has total calories for breakfast', function(){
     driver.get('http://localhost:8080/');
 
     var data = JSON.stringify([{name: 'banana', calories: '30'}, {name: 'Chocolate', calories: '400'}]);
@@ -447,7 +447,7 @@ test.xit('each meal table has a list of food and calories', function(){
     })
   })
 
-  test.it('has remaining calories for breakfast', function(){
+  test.xit('has remaining calories for breakfast', function(){
     driver.get('http://localhost:8080/');
 
     var data = JSON.stringify([{name: 'banana', calories: '30'}, {name: 'Chocolate', calories: '300'}]);
@@ -465,6 +465,48 @@ test.xit('each meal table has a list of food and calories', function(){
 
     driver.findElement({css: '#breakfast-remaining-calories'}).getText().then(function(value){
       assert.equal(value, '70');
+    })
+  })
+
+  test.it('it colors remaining calories green when positive', function(){
+    driver.get('http://localhost:8080/');
+
+    var data = JSON.stringify([{name: 'banana', calories: '30'}, {name: 'Chocolate', calories: '300'}]);
+    driver.executeScript("window.localStorage.setItem('foods','" +data+ "');");
+
+    driver.get('http://localhost:8080/');
+
+    addToBreakfastButton = driver.findElement({id: 'add-to-breakfast'});
+    bananaCheckBox       = driver.findElement({css: 'input#banana'});
+    chocolateCheckBox    = driver.findElement({css: 'input#Chocolate'}) ;
+
+    driver.executeScript("arguments[0].click();", bananaCheckBox);
+    driver.executeScript("arguments[0].click();", chocolateCheckBox);
+    addToBreakfastButton.click();
+
+    driver.findElement({css: '.special-green'}).getText().then(function(text) {
+      assert.equal(text, '70');
+    })
+  })
+
+  test.it('it colors remaining calories red when negative', function(){
+    driver.get('http://localhost:8080/');
+
+    var data = JSON.stringify([{name: 'banana', calories: '300'}, {name: 'Chocolate', calories: '300'}]);
+    driver.executeScript("window.localStorage.setItem('foods','" +data+ "');");
+
+    driver.get('http://localhost:8080/');
+
+    addToBreakfastButton = driver.findElement({id: 'add-to-breakfast'});
+    bananaCheckBox       = driver.findElement({css: 'input#banana'});
+    chocolateCheckBox    = driver.findElement({css: 'input#Chocolate'}) ;
+
+    driver.executeScript("arguments[0].click();", bananaCheckBox);
+    driver.executeScript("arguments[0].click();", chocolateCheckBox);
+    addToBreakfastButton.click();
+
+    driver.findElement({css: '.special-red'}).getText().then(function(text) {
+      assert.equal(text, '-200');
     })
   })
 })
