@@ -111,7 +111,7 @@ test.describe('testing exercises.html', function() {
     name.sendKeys('running');
     submitButton.click();
 
-    driver.findElement({id: 'table-body'}).getText().then(function(value){
+    driver.findElement({id: 'exercise-table-body'}).getText().then(function(value){
       expect(value).to.be.empty;
     });
   });
@@ -179,7 +179,7 @@ test.describe('testing exercises.html', function() {
 
     driver.findElement({css: '.delete-exercises'}).click();
 
-    driver.findElement({id: 'table-body'}).getText().then(function(value){
+    driver.findElement({id: 'exercise-table-body'}).getText().then(function(value){
       expect(value).to.be.empty;
     });
   })
@@ -259,11 +259,11 @@ test.describe('testing exercises.html', function() {
 
     driver.get('http://localhost:8080/exercises.html');
 
-    var filterInput = driver.findElement({css: '#name-filter'});
+    var filterInput = driver.findElement({css: '#exercise-name-filter'});
     filterInput.click();
     filterInput.sendKeys('S');
 
-    driver.findElement({css: '#table-body'}).getText().then(function(textValue) {
+    driver.findElement({css: '#exercise-table-body'}).getText().then(function(textValue) {
       assert.include(textValue, 'swimming');
       assert.notInclude(textValue, 'running');
     })
