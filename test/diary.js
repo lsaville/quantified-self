@@ -717,7 +717,27 @@ test.it('each meal table has a list of food and calories', function(){
     driver.findElements({css: 'input[type=checkbox]:checked'}).then(function(value) {
       assert.deepEqual(value, []);
     })
+  })
 
+  test.it('clears checkboxes from exercises table after add is clicked and the rows are added', function(){
+    driver.get('http://localhost:8080/');
+
+    var data = JSON.stringify([{name: 'running', calories: '555'}, {name: 'swimming', calories: '9999'}]);
+    driver.executeScript("window.localStorage.setItem('exercises','" +data+ "');");
+
+    driver.get('http://localhost:8080/');
+
+    addToExerciseButton = driver.findElement({id: 'add-to-exercise'});
+    runningCheckBox      = driver.findElement({css: 'input#running'});
+    swimmingCheckBox     = driver.findElement({css: 'input#swimming'}) ;
+
+    driver.executeScript("arguments[0].click();", runningCheckBox);
+    driver.executeScript("arguments[0].click();", swimmingCheckBox);
+    addToExerciseButton.click();
+
+    driver.findElements({css: 'input[type=checkbox]:checked'}).then(function(value) {
+      assert.deepEqual(value, []);
+    })
   })
 
 })
