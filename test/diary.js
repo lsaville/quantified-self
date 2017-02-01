@@ -19,7 +19,7 @@ test.describe('testing diary.html', function() {
     driver.quit();
   })
 
-  test.xit('shows me todays date', function() {
+  test.it('shows me todays date', function() {
     driver.get('http://localhost:8080/');
 
     var dateOnPage = driver.findElement({id: 'date'});
@@ -30,7 +30,7 @@ test.describe('testing diary.html', function() {
     })
   })
 
-  test.xit('the day changes to yesterday if I click the left arrow', function(){
+  test.it('the day changes to yesterday if I click the left arrow', function(){
     driver.get('http://localhost:8080/');
 
     var leftArrow  = driver.findElement({id: 'day-back'});
@@ -44,7 +44,7 @@ test.describe('testing diary.html', function() {
     });
   })
 
-  test.xit('the day changes to tomorrow if I click the right arrow', function(){
+  test.it('the day changes to tomorrow if I click the right arrow', function(){
     driver.get('http://localhost:8080/');
 
     var rightArrow  = driver.findElement({id: 'day-forward'});
@@ -58,7 +58,7 @@ test.describe('testing diary.html', function() {
     });
   })
 
-  test.xit('can search through the exercises', function(){
+  test.it('can search through the exercises', function(){
     driver.get('http://localhost:8080/');
 
     var data = JSON.stringify([{name: 'running', calories: '300'}, {name: 'swimming', calories: '400'}]);
@@ -76,7 +76,7 @@ test.describe('testing diary.html', function() {
     })
   })
 
-  test.xit('can search through the foods', function(){
+  test.it('can search through the foods', function(){
     driver.get('http://localhost:8080/');
 
     var data = JSON.stringify([{name: 'chocolate cake', calories: '3000'}, {name: 'rice', calories: '40'}]);
@@ -94,7 +94,7 @@ test.describe('testing diary.html', function() {
     })
   })
 
-test.xit('each meal table has a list of food and calories', function(){
+test.it('each meal table has a list of food and calories', function(){
     driver.get('http://localhost:8080/');
 
     var data = {name: 'rice', calories: '40'};
@@ -140,7 +140,7 @@ test.xit('each meal table has a list of food and calories', function(){
     });
   });
 
-  test.xit('exercise table has a list of exercise and calories', function(){
+  test.it('exercise table has a list of exercise and calories', function(){
     driver.get('http://localhost:8080/');
 
     var data    = {name: 'running', calories: '400'};
@@ -167,7 +167,7 @@ test.xit('each meal table has a list of food and calories', function(){
     });
   });
 
-  test.xit('foods table in Diary', function(){
+  test.it('foods table in Diary', function(){
     driver.get('http://localhost:8080/');
 
     var data = JSON.stringify([{name: 'Apple', calories: '40'}]);
@@ -181,7 +181,7 @@ test.xit('each meal table has a list of food and calories', function(){
     });
   });
 
-  test.xit('Exercises table in Diary', function(){
+  test.it('Exercises table in Diary', function(){
     driver.get('http://localhost:8080/');
 
     var data = JSON.stringify([{name: 'Running', calories: '400'}]);
@@ -195,7 +195,7 @@ test.xit('each meal table has a list of food and calories', function(){
     });
   });
 
-  test.xit('Removing deleted foods from diary removes from meal table but not foods table', function(){
+  test.it('Removing deleted foods from diary removes from meal table but not foods table', function(){
     driver.get('http://localhost:8080/');
 
     var data     = {name: 'Apple', calories: '33'};
@@ -297,7 +297,7 @@ test.xit('each meal table has a list of food and calories', function(){
     });
   });
 
-  test.xit('Add meal to diary', function(){
+  test.it('Add meal to diary', function(){
     driver.get('http://localhost:8080/');
 
     var data = JSON.stringify([{name: 'Apple', calories: '40'}]);
@@ -344,7 +344,7 @@ test.xit('each meal table has a list of food and calories', function(){
     });
   });
 
-  test.xit('Persisting diary across refreshes', function(){
+  test.it('Persisting diary across refreshes', function(){
     driver.get('http://localhost:8080/');
 
     var foodData = [{name: 'Apple', calories: '33'}];
@@ -419,7 +419,7 @@ test.xit('each meal table has a list of food and calories', function(){
     });
   });
 
-  test.xit('Add exercise to diary', function(){
+  test.it('Add exercise to diary', function(){
     driver.get('http://localhost:8080/');
 
     var data = JSON.stringify([{name: 'Running', calories: '400'}]);
@@ -439,7 +439,7 @@ test.xit('each meal table has a list of food and calories', function(){
     });
   });
 
-  test.xit('Removing deleted exercises from diary removes from exercise table but not exercises table', function(){
+  test.it('Removing deleted exercises from diary removes from exercise table but not exercises table', function(){
     driver.get('http://localhost:8080/');
 
     var data     = {name: 'Running', calories: '400'};
@@ -487,7 +487,7 @@ test.xit('each meal table has a list of food and calories', function(){
     });
   });
 
-  test.xit('has total calories for breakfast', function(){
+  test.it('has total calories for breakfast', function(){
     driver.get('http://localhost:8080/');
 
     var data = JSON.stringify([{name: 'banana', calories: '30'}, {name: 'Chocolate', calories: '400'}]);
@@ -508,7 +508,7 @@ test.xit('each meal table has a list of food and calories', function(){
     })
   })
 
-  test.xit('has remaining calories for breakfast', function(){
+  test.it('has remaining calories for breakfast', function(){
     driver.get('http://localhost:8080/');
 
     var data = JSON.stringify([{name: 'banana', calories: '30'}, {name: 'Chocolate', calories: '300'}]);
@@ -529,7 +529,7 @@ test.xit('each meal table has a list of food and calories', function(){
     })
   })
 
-  test.xit('it colors remaining calories green when positive', function(){
+  test.it('it colors remaining calories green when positive', function(){
     driver.get('http://localhost:8080/');
 
     var data = JSON.stringify([{name: 'banana', calories: '30'}, {name: 'Chocolate', calories: '300'}]);
@@ -550,7 +550,7 @@ test.xit('each meal table has a list of food and calories', function(){
     })
   })
 
-  test.xit('it colors remaining calories red when negative', function(){
+  test.it('it colors remaining calories red when negative', function(){
     driver.get('http://localhost:8080/');
 
     var data = JSON.stringify([{name: 'banana', calories: '300'}, {name: 'Chocolate', calories: '300'}]);
@@ -571,7 +571,7 @@ test.xit('each meal table has a list of food and calories', function(){
     })
   })
 
-  test.xit('it colors exercise calories green when positive', function(){
+  test.it('it colors exercise calories green when positive', function(){
     driver.get('http://localhost:8080/');
 
     var data = JSON.stringify([{name: 'swimming', calories: '300'}]);
@@ -590,7 +590,7 @@ test.xit('each meal table has a list of food and calories', function(){
     })
   })
 
-  test.xit('when a previous day with content is visited, the tables update', function(){
+  test.it('when a previous day with content is visited, the tables update', function(){
     driver.get('http://localhost:8080/');
 
     var date    = new Date;
@@ -644,7 +644,7 @@ test.xit('each meal table has a list of food and calories', function(){
     });
   })
 
-  test.xit('when a future day with content is visited, the tables update', function(){
+  test.it('when a future day with content is visited, the tables update', function(){
     driver.get('http://localhost:8080/');
 
     var date       = new Date;
