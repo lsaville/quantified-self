@@ -70,7 +70,7 @@ test.describe('testing diary.html', function() {
     searchInput.click();
     searchInput.sendKeys('R');
 
-    driver.findElement({css: '#exercise-table-body'}).getText().then(function(value) {
+    driver.findElement({css: '#exercises-table-body'}).getText().then(function(value) {
       assert.include(value, 'running');
       assert.notInclude(value, 'swimming');
     })
@@ -88,7 +88,7 @@ test.describe('testing diary.html', function() {
     searchInput.click();
     searchInput.sendKeys('R');
 
-    driver.findElement({css: '#food-table-body'}).getText().then(function(value) {
+    driver.findElement({css: '#foods-table-body'}).getText().then(function(value) {
       assert.include(value, 'rice');
       assert.notInclude(value, 'chocolate cake');
     })
@@ -97,11 +97,25 @@ test.describe('testing diary.html', function() {
 test.xit('each meal table has a list of food and calories', function(){
     driver.get('http://localhost:8080/');
 
-    var data = JSON.stringify([{name: 'rice', calories: '40'}]);
-    driver.executeScript("window.localStorage.setItem('breakfast','" +data+ "');");
-    driver.executeScript("window.localStorage.setItem('lunch','" +data+ "');");
-    driver.executeScript("window.localStorage.setItem('dinner','" +data+ "');");
-    driver.executeScript("window.localStorage.setItem('snacks','" +data+ "');");
+    var data = {name: 'rice', calories: '40'};
+    var date = new Date;
+    date     = date.toDateString();
+
+    var day =  { breakfast: [],
+                 lunch:     [],
+                 dinner:    [],
+                 snacks:    [],
+                 exercise:  []
+               }
+
+    day.breakfast.push(data);
+    day.lunch.push(data);
+    day.dinner.push(data);
+    day.snacks.push(data);
+
+    dayJSON = JSON.stringify(day);
+
+    driver.executeScript(`window.localStorage.setItem('${date}', '${dayJSON}')`);
 
     driver.get('http://localhost:8080/');
 
@@ -129,8 +143,21 @@ test.xit('each meal table has a list of food and calories', function(){
   test.xit('exercise table has a list of exercise and calories', function(){
     driver.get('http://localhost:8080/');
 
-    var data = JSON.stringify([{name: 'running', calories: '400'}]);
-    driver.executeScript("window.localStorage.setItem('exercise','" +data+ "');");
+    var data    = {name: 'running', calories: '400'};
+    var date    = new Date;
+    date        = date.toDateString();
+
+    var day =  { breakfast: [],
+                 lunch:     [],
+                 dinner:    [],
+                 snacks:    [],
+                 exercise:  []
+               }
+
+    day.exercise.push(data);
+    dayJSON = JSON.stringify(day);
+
+    driver.executeScript(`window.localStorage.setItem('${date}', '${dayJSON}')`);
 
     driver.get('http://localhost:8080/');
 
@@ -169,88 +196,104 @@ test.xit('each meal table has a list of food and calories', function(){
   });
 
   test.xit('Removing deleted foods from diary removes from meal table but not foods table', function(){
-
     driver.get('http://localhost:8080/');
 
-    var data = JSON.stringify([{name: 'Apple', calories: '40'}]);
-    driver.executeScript("window.localStorage.setItem('foods','" +data+ "');");
-    driver.executeScript("window.localStorage.setItem('breakfast','" +data+ "');");
-    driver.executeScript("window.localStorage.setItem('lunch','" +data+ "');");
-    driver.executeScript("window.localStorage.setItem('dinner','" +data+ "');");
-    driver.executeScript("window.localStorage.setItem('snacks','" +data+ "');");
+    var data     = {name: 'Apple', calories: '33'};
+    var foodData = [{name: 'Apple', calories: '33'}];
+    var date = new Date;
+    date     = date.toDateString();
+
+    var day =  { breakfast: [],
+                 lunch:     [],
+                 dinner:    [],
+                 snacks:    [],
+                 exercise:  []
+               }
+
+    day.breakfast.push(data);
+    day.lunch.push(data);
+    day.dinner.push(data);
+    day.snacks.push(data);
+
+    dayJSON   = JSON.stringify(day);
+    foodsJSON = JSON.stringify(foodData);
+
+    driver.executeScript(`window.localStorage.setItem('${date}', '${dayJSON}')`);
+    driver.executeScript(`window.localStorage.setItem('foods', '${foodsJSON}')`);
 
     driver.get('http://localhost:8080/');
 
     driver.findElement({css: '#breakfast-table'}).getText().then(function(value) {
       assert.include(value, 'Apple');
-      assert.include(value, '40');
+      assert.include(value, '33');
     });
 
     driver.findElement({css: '#lunch-table'}).getText().then(function(value) {
       assert.include(value, 'Apple');
-      assert.include(value, '40');
+      assert.include(value, '33');
     });
 
     driver.findElement({css: '#dinner-table'}).getText().then(function(value) {
       assert.include(value, 'Apple');
-      assert.include(value, '40');
+      assert.include(value, '33');
     });
 
     driver.findElement({css: '#snacks-table'}).getText().then(function(value) {
       assert.include(value, 'Apple');
-      assert.include(value, '40');
+      assert.include(value, '33');
     });
 
     driver.findElement({css: '#diary-foods-table'}).getText().then(function(value) {
       assert.include(value, 'Apple');
-      assert.include(value, '40');
+      assert.include(value, '33');
     });
+
     driver.findElement({css: '.delete-breakfast'}).click();
 
     driver.findElement({css: '#breakfast-table'}).getText().then(function(value) {
       assert.notInclude(value, 'Apple');
-      assert.notInclude(value, '40');
+      assert.notInclude(value, '33');
     });
 
     driver.findElement({css: '#diary-foods-table'}).getText().then(function(value) {
       assert.include(value, 'Apple');
-      assert.include(value, '40');
+      assert.include(value, '33');
     });
 
     driver.findElement({css: '.delete-lunch'}).click();
 
     driver.findElement({css: '#lunch-table'}).getText().then(function(value) {
       assert.notInclude(value, 'Apple');
-      assert.notInclude(value, '40');
+      assert.notInclude(value, '33');
     });
 
     driver.findElement({css: '#diary-foods-table'}).getText().then(function(value) {
       assert.include(value, 'Apple');
-      assert.include(value, '40');
+      assert.include(value, '33');
     });
 
     driver.findElement({css: '.delete-dinner'}).click();
 
     driver.findElement({css: '#dinner-table'}).getText().then(function(value) {
       assert.notInclude(value, 'Apple');
-      assert.notInclude(value, '40');
+      assert.notInclude(value, '33');
     });
 
     driver.findElement({css: '#diary-foods-table'}).getText().then(function(value) {
       assert.include(value, 'Apple');
-      assert.include(value, '40');
+      assert.include(value, '33');
     });
 
     driver.findElement({css: '.delete-snacks'}).click();
 
     driver.findElement({css: '#snacks-table'}).getText().then(function(value) {
       assert.notInclude(value, 'Apple');
-      assert.notInclude(value, '40');
+      assert.notInclude(value, '33');
     });
 
     driver.findElement({css: '#diary-foods-table'}).getText().then(function(value) {
       assert.include(value, 'Apple');
-      assert.include(value, '40');
+      assert.include(value, '33');
     });
   });
 
@@ -304,8 +347,11 @@ test.xit('each meal table has a list of food and calories', function(){
   test.xit('Persisting diary across refreshes', function(){
     driver.get('http://localhost:8080/');
 
-    var data = JSON.stringify([{name: 'Apple', calories: '40'}]);
-    driver.executeScript("window.localStorage.setItem('foods','" +data+ "');");
+    var foodData = [{name: 'Apple', calories: '33'}];
+
+    foodsJSON = JSON.stringify(foodData);
+
+    driver.executeScript(`window.localStorage.setItem('foods', '${foodsJSON}')`);
 
     driver.get('http://localhost:8080/');
 
@@ -327,22 +373,22 @@ test.xit('each meal table has a list of food and calories', function(){
 
     driver.findElement({css: '#breakfast-table'}).getText().then(function(value) {
       assert.include(value, 'Apple');
-      assert.include(value, '40');
+      assert.include(value, '33');
     });
 
     driver.findElement({css: '#lunch-table'}).getText().then(function(value) {
       assert.include(value, 'Apple');
-      assert.include(value, '40');
+      assert.include(value, '33');
     });
 
     driver.findElement({css: '#dinner-table'}).getText().then(function(value) {
       assert.include(value, 'Apple');
-      assert.include(value, '40');
+      assert.include(value, '33');
     });
 
     driver.findElement({css: '#snacks-table'}).getText().then(function(value) {
       assert.include(value, 'Apple');
-      assert.include(value, '40');
+      assert.include(value, '33');
     });
 
     driver.findElement({css: '.delete-breakfast'}).click();
@@ -354,22 +400,22 @@ test.xit('each meal table has a list of food and calories', function(){
 
     driver.findElement({css: '#breakfast-table'}).getText().then(function(value) {
       assert.notInclude(value, 'Apple');
-      assert.notInclude(value, '40');
+      assert.notInclude(value, '33');
     });
 
     driver.findElement({css: '#lunch-table'}).getText().then(function(value) {
       assert.notInclude(value, 'Apple');
-      assert.notInclude(value, '40');
+      assert.notInclude(value, '33');
     });
 
     driver.findElement({css: '#dinner-table'}).getText().then(function(value) {
       assert.notInclude(value, 'Apple');
-      assert.notInclude(value, '40');
+      assert.notInclude(value, '33');
     });
 
     driver.findElement({css: '#snacks-table'}).getText().then(function(value) {
       assert.notInclude(value, 'Apple');
-      assert.notInclude(value, '40');
+      assert.notInclude(value, '33');
     });
   });
 
@@ -394,12 +440,27 @@ test.xit('each meal table has a list of food and calories', function(){
   });
 
   test.xit('Removing deleted exercises from diary removes from exercise table but not exercises table', function(){
-
     driver.get('http://localhost:8080/');
 
-    var data = JSON.stringify([{name: 'Running', calories: '400'}]);
-    driver.executeScript("window.localStorage.setItem('exercises','" +data+ "');");
-    driver.executeScript("window.localStorage.setItem('exercise','" +data+ "');");
+    var data     = {name: 'Running', calories: '400'};
+    var exerciseData = [{name: 'Running', calories: '400'}];
+    var date = new Date;
+    date     = date.toDateString();
+
+    var day =  { breakfast: [],
+                 lunch:     [],
+                 dinner:    [],
+                 snacks:    [],
+                 exercise:  []
+               }
+
+    day.exercise.push(data);
+
+    dayJSON   = JSON.stringify(day);
+    exerciseJSON = JSON.stringify(exerciseData);
+
+    driver.executeScript(`window.localStorage.setItem('${date}', '${dayJSON}')`);
+    driver.executeScript(`window.localStorage.setItem('exercises', '${exerciseJSON}')`);
 
     driver.get('http://localhost:8080/');
 
@@ -510,7 +571,7 @@ test.xit('each meal table has a list of food and calories', function(){
     })
   })
 
-  test.it('it colors exercise calories green when positive', function(){
+  test.xit('it colors exercise calories green when positive', function(){
     driver.get('http://localhost:8080/');
 
     var data = JSON.stringify([{name: 'swimming', calories: '300'}]);
@@ -527,6 +588,114 @@ test.xit('each meal table has a list of food and calories', function(){
     driver.findElement({css: '.special-green'}).getText().then(function(text) {
       assert.equal(text, '300');
     })
+  })
+
+  test.xit('when a previous day with content is visited, the tables update', function(){
+    driver.get('http://localhost:8080/');
+
+    var date    = new Date;
+    var dayBack = new Date;
+    dayBack.setDate(date.getDate() - 1)
+    dayBack     = dayBack.toDateString();
+    date        = date.toDateString();
+
+    var day1 =  { breakfast: [{name: 'rice', calories: '88'}],
+                  lunch:     [],
+                  dinner:    [],
+                  snacks:    [],
+                  exercise:  []
+                }
+
+    var day2 =  { breakfast: [],
+                  lunch:     [],
+                  dinner:    [{name: 'cake', calories: '333'}],
+                  snacks:    [],
+                  exercise:  []
+                }
+
+    dayJSON1 = JSON.stringify(day1);
+    dayJSON2 = JSON.stringify(day2);
+
+    driver.executeScript(`window.localStorage.setItem('${date}', '${dayJSON1}')`);
+    driver.executeScript(`window.localStorage.setItem('${dayBack}', '${dayJSON2}')`);
+
+    driver.get('http://localhost:8080/');
+
+    driver.findElement({css: '#breakfast-table'}).getText().then(function(value) {
+      assert.include(value, 'rice');
+      assert.include(value, '88');
+    });
+
+    driver.findElement({css: '#dinner-table'}).getText().then(function(value) {
+      assert.notInclude(value, 'cake');
+      assert.notInclude(value, '333');
+    });
+
+    driver.findElement({css: '#day-back'}).click();
+
+    driver.findElement({css: '#breakfast-table'}).getText().then(function(value) {
+      assert.notInclude(value, 'rice');
+      assert.notInclude(value, '88');
+    });
+
+    driver.findElement({css: '#dinner-table'}).getText().then(function(value) {
+      assert.include(value, 'cake');
+      assert.include(value, '333');
+    });
+  })
+
+  test.xit('when a future day with content is visited, the tables update', function(){
+    driver.get('http://localhost:8080/');
+
+    var date       = new Date;
+    var dayForward = new Date;
+    dayForward.setDate(date.getDate() + 1)
+    dayForward     = dayForward.toDateString();
+    date           = date.toDateString();
+
+    var day1 =  { breakfast: [{name: 'rice', calories: '88'}],
+                  lunch:     [],
+                  dinner:    [],
+                  snacks:    [],
+                  exercise:  []
+                }
+
+    var day2 =  { breakfast: [],
+                  lunch:     [],
+                  dinner:    [{name: 'cake', calories: '333'}],
+                  snacks:    [],
+                  exercise:  []
+                }
+
+    dayJSON1 = JSON.stringify(day1);
+    dayJSON2 = JSON.stringify(day2);
+
+    driver.executeScript(`window.localStorage.setItem('${date}', '${dayJSON1}')`);
+    driver.executeScript(`window.localStorage.setItem('${dayForward}', '${dayJSON2}')`);
+
+    driver.get('http://localhost:8080/');
+
+    driver.findElement({css: '#breakfast-table'}).getText().then(function(value) {
+      assert.include(value, 'rice');
+      assert.include(value, '88');
+    });
+
+    driver.findElement({css: '#dinner-table'}).getText().then(function(value) {
+      assert.notInclude(value, 'cake');
+      assert.notInclude(value, '333');
+    });
+
+    driver.findElement({css: '#day-forward'}).click();
+
+    driver.findElement({css: '#breakfast-table'}).getText().then(function(value) {
+      assert.notInclude(value, 'rice');
+      assert.notInclude(value, '88');
+    });
+
+    driver.findElement({css: '#dinner-table'}).getText().then(function(value) {
+      assert.include(value, 'cake');
+      assert.include(value, '333');
+    });
   })
 
 })

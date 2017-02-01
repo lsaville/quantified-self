@@ -169,7 +169,7 @@
 
 	$('#food-name-filter').on('keyup', function () {
 	  var searchTerm = this.value.toUpperCase();
-	  var tableContents = $('#food-table-body').children();
+	  var tableContents = $('#foods-table-body').children();
 	  for (var i = 0; i < tableContents.length; i++) {
 	    var tableName = tableContents[i].children[0].innerHTML.toUpperCase();
 	    if (tableName.indexOf(searchTerm)) {
@@ -10441,7 +10441,7 @@
 
 
 	// module
-	exports.push([module.id, ".form-error {\n  color: red;\n  margin-bottom: 10px; }\n\n.arrow {\n  margin-top: 23px; }\n", ""]);
+	exports.push([module.id, ".form-error {\n  color: red;\n  margin-bottom: 10px; }\n\n.arrow {\n  margin-top: 23px; }\n\n.special-red {\n  color: red; }\n\n.special-green {\n  color: green; }\n", ""]);
 
 	// exports
 
