@@ -56,7 +56,7 @@ test.describe('testing foods.html', function() {
     })
   });
 
-  test.xit('my exercises exist when I visit the site', function(){
+  test.xit('my food exists when I visit the site', function(){
     driver.get('http://localhost:8080/foods.html');
 
     var data = JSON.stringify([{name: 'banana', calories: '30'}]);
@@ -111,7 +111,7 @@ test.describe('testing foods.html', function() {
     name.sendKeys('banana');
     submitButton.click();
 
-    driver.findElement({id: 'food-table-body'}).getText().then(function(value){
+    driver.findElement({id: 'foods-table-body'}).getText().then(function(value){
       expect(value).to.be.empty;
     });
   });
@@ -179,7 +179,7 @@ test.describe('testing foods.html', function() {
 
     driver.findElement({css: '.delete-foods'}).click();
 
-    driver.findElement({id: 'food-table-body'}).getText().then(function(value){
+    driver.findElement({id: 'foods-table-body'}).getText().then(function(value){
       expect(value).to.be.empty;
     });
   })
@@ -264,7 +264,7 @@ test.describe('testing foods.html', function() {
     filterInput.sendKeys('B');
 
 
-    driver.findElement({css: '#food-table-body'}).getText().then(function(textValue) {
+    driver.findElement({css: '#foods-table-body'}).getText().then(function(textValue) {
       assert.include(textValue, 'banana');
       assert.notInclude(textValue, 'Chocolate Cake');
     })
