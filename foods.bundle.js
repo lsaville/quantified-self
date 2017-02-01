@@ -10441,7 +10441,7 @@
 
 
 	// module
-	exports.push([module.id, ".form-error {\n  color: red;\n  margin-bottom: 10px; }\n\n.arrow {\n  margin-top: 23px; }\n", ""]);
+	exports.push([module.id, ".form-error {\n  color: red;\n  margin-bottom: 10px; }\n\n.arrow {\n  margin-top: 23px; }\n\n.special-red {\n  color: red; }\n\n.special-green {\n  color: green; }\n", ""]);
 
 	// exports
 
