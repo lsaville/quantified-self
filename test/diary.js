@@ -468,7 +468,7 @@ test.xit('each meal table has a list of food and calories', function(){
     })
   })
 
-  test.it('it colors remaining calories green when positive', function(){
+  test.xit('it colors remaining calories green when positive', function(){
     driver.get('http://localhost:8080/');
 
     var data = JSON.stringify([{name: 'banana', calories: '30'}, {name: 'Chocolate', calories: '300'}]);
@@ -489,7 +489,7 @@ test.xit('each meal table has a list of food and calories', function(){
     })
   })
 
-  test.it('it colors remaining calories red when negative', function(){
+  test.xit('it colors remaining calories red when negative', function(){
     driver.get('http://localhost:8080/');
 
     var data = JSON.stringify([{name: 'banana', calories: '300'}, {name: 'Chocolate', calories: '300'}]);
@@ -509,4 +509,24 @@ test.xit('each meal table has a list of food and calories', function(){
       assert.equal(text, '-200');
     })
   })
+
+  test.it('it colors exercise calories green when positive', function(){
+    driver.get('http://localhost:8080/');
+
+    var data = JSON.stringify([{name: 'swimming', calories: '300'}]);
+    driver.executeScript("window.localStorage.setItem('exercises','" +data+ "');");
+
+    driver.get('http://localhost:8080/');
+
+    addToExerciseButton = driver.findElement({id: 'add-to-exercise'});
+    swimmingCheckBox     = driver.findElement({css: 'input#swimming'});
+
+    driver.executeScript("arguments[0].click();", swimmingCheckBox);
+    addToExerciseButton.click();
+
+    driver.findElement({css: '.special-green'}).getText().then(function(text) {
+      assert.equal(text, '300');
+    })
+  })
+
 })
