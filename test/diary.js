@@ -698,4 +698,26 @@ test.it('each meal table has a list of food and calories', function(){
     });
   })
 
+  test.it("reroutes to the exercise page when you click 'Create New' in the exercises section", function() {
+    driver.get('http://localhost:8080/');
+
+    createNewExerciseButton = driver.findElement({css: '#new-exercise-button'});
+    createNewExerciseButton.click();
+
+    var url = driver.getCurrentUrl().then(function(value){
+      assert.equal(value, 'http://localhost:8080/exercises.html');
+    })
+  })
+
+  test.it("reroutes to the foods page when you click 'Create New' in the foods section", function() {
+    driver.get('http://localhost:8080/');
+
+    createNewFoodButton = driver.findElement({css: '#new-foods-button'});
+    createNewFoodButton.click();
+
+    var url = driver.getCurrentUrl().then(function(value){
+      assert.equal(value, 'http://localhost:8080/foods.html');
+    })
+  })
+
 })
