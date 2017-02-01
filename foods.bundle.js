@@ -169,7 +169,7 @@
 
 	$('#food-name-filter').on('keyup', function () {
 	  var searchTerm = this.value.toUpperCase();
-	  var tableContents = $('#food-table-body').children();
+	  var tableContents = $('#foods-table-body').children();
 	  for (var i = 0; i < tableContents.length; i++) {
 	    var tableName = tableContents[i].children[0].innerHTML.toUpperCase();
 	    if (tableName.indexOf(searchTerm)) {

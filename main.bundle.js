@@ -287,10 +287,8 @@
 
 	function nukeRows(table, tableBody) {
 	  var length = tableBody.children().length;
-	  debugger;
-	  for (var i = 0; i <= length - 1; i++) {
+	  for (var i = 0; i < length; i++) {
 	    tableBody.children()[0].remove();
-	    debugger;
 	  }
 	  if (table === 'foods' || table === 'exercises') {
 	    return;
@@ -300,7 +298,6 @@
 	};
 
 	function nuke() {
-	  // debugger;
 	  nukeRows('exercise', $('#exercise-table-body'));
 	  nukeRows('breakfast', $('#breakfast-table-body'));
 	  nukeRows('lunch', $('#lunch-table-body'));
@@ -444,7 +441,6 @@
 	  var today = new Date();
 	  var humanDate = today.toDateString();
 	  var dayJSON = localStorage.getItem(humanDate);
-	  // var day       = dayTemplate(humanDate);
 	  displayDate(humanDate);
 
 	  if (!dayJSON) {
@@ -464,7 +460,6 @@
 	}
 
 	$('#day-back').on('click', function () {
-	  // debugger;
 	  nuke();
 	  var current = new Date($('#date').text());
 	  var dayBack = new Date(current - 1).toDateString();
@@ -480,6 +475,7 @@
 	});
 
 	$('#day-forward').on('click', function () {
+	  nuke();
 	  var current = new Date($('#date').text());
 	  var dayForward = new Date(current.setDate(current.getDate() + 1)).toDateString();
 	  displayDate(dayForward);
@@ -508,7 +504,7 @@
 
 	$('#food-name-filter').on('keyup', function () {
 	  var searchTerm = this.value.toUpperCase();
-	  var tableContents = $('#food-table-body').children();
+	  var tableContents = $('#foods-table-body').children();
 	  for (var i = 0; i < tableContents.length; i++) {
 	    var tableName = tableContents[i].children[0].innerHTML.toUpperCase();
 	    if (tableName.indexOf(searchTerm)) {
