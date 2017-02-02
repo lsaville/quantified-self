@@ -32,7 +32,7 @@
             <table id='breakfast-table' class='breakfast bordered highlight'>
               <thead>
                 <th>Name</th>
-                <th>Calories</th>
+                <th'>Calories</th>
               </thead>
               <tbody id='breakfast-table-body'>
               </tbody>
@@ -40,6 +40,11 @@
                 <tr>
                   <td>Total Calories</td>
                   <td id='breakfast-total-calories'>0</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>Remaining Calories</td>
+                  <td id='breakfast-remaining-calories'>400</td>
                   <td></td>
                 </tr>
               </tfoot>
@@ -59,6 +64,11 @@
                 <tr>
                   <td>Total Calories</td>
                   <td id='dinner-total-calories'>0</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>Remaining Calories</td>
+                  <td id='dinner-remaining-calories'>800</td>
                   <td></td>
                 </tr>
               </tfoot>
@@ -103,6 +113,11 @@
                   <td id='lunch-total-calories'>0</td>
                   <td></td>
                 </tr>
+                <tr>
+                  <td>Remaining Calories</td>
+                  <td id='lunch-remaining-calories'>600</td>
+                  <td></td>
+                </tr>
               </tfoot>
             </table>
           </div>
@@ -122,19 +137,47 @@
                   <td id='snacks-total-calories'>0</td>
                   <td></td>
                 </tr>
+                <tr>
+                  <td>Remaining Calories</td>
+                  <td id='snacks-remaining-calories'>200</td>
+                  <td></td>
+                </tr>
               </tfoot>
             </table>
           </div>
 
           <div>
             <h3>Totals</h3>
-            <table id=totals-table class='bordered highlight'>
+            <table id=totals-table class='totals bordered highlight'>
               <thead>
                 <th>Name</th>
                 <th>Calories</th>
               </thead>
               <tbody>
+                <tr>
+                  <td>Goal Calories</td>
+                  <td id='totals-goal-calories'>2000</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>Calories Consumed</td>
+                  <td id='totals-calories-consumed'>0</td>
+                  <td></td>
+                </tr>
+                <tr>
               </tbody>
+              <tfoot>
+                <tr>
+                  <td>Calories Burned</td>
+                  <td id='totals-calories-burned'>0</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>Remaining Calories</td>
+                  <td id='totals-remaining-calories'>200</td>
+                  <td></td>
+                </tr>
+              </tfoot>
             </table>
           </div>
 
@@ -146,22 +189,22 @@
         <div class='col s4 offset-s1'>
 
           <h3>Foods</h3>
-          <a href='./foods.html' class="waves-effect waves-light btn">Create New</a>
+          <a href='./foods.html' id='new-foods-button' class="waves-effect waves-light btn">Create New</a>
           <p>Add Selected To</p>
           <div class='row'>
             <div class='col s6'>
               <a href='#' id='add-to-breakfast' class="add-breakfast waves-effect waves-light btn">Breakfast</a>
             </div>
             <div class='col s6'>
-                <a href='#' class="add-lunch waves-effect waves-light btn">Lunch</a>
+                <a href='#' id='add-to-lunch' class="add-lunch waves-effect waves-light btn">Lunch</a>
             </div>
           </div>
           <div class='row'>
             <div class='col s6'>
-              <a href='#' class="add-dinner waves-effect waves-light btn">Dinner</a>
+              <a href='#' id='add-to-dinner' class="add-dinner waves-effect waves-light btn">Dinner</a>
             </div>
             <div class='col s6'>
-              <a href='#' class="add-snacks waves-effect waves-light btn">Snacks</a>
+              <a href='#' id='add-to-snacks' class="add-snacks waves-effect waves-light btn">Snacks</a>
             </div>
           </div>
 
@@ -174,10 +217,10 @@
           <table id='diary-foods-table' class='diary-foods bordered highlight'>
             <thead>
               <th>Name</th>
-              <th>Calories</th>
+              <th id='sort-food-calories' class='asc'>Calories</th>
               <th></th>
             </thead>
-            <tbody id='food-table-body'>
+            <tbody id='foods-table-body'>
             </tbody>
           </table>
         </div>
@@ -189,10 +232,10 @@
 
           <div class='row'>
             <div class='col s6'>
-              <a href='./exercises.html' class="waves-effect waves-light btn">Create New</a>
+              <a href='./exercises.html' id='new-exercise-button' class="waves-effect waves-light btn">Create New</a>
             </div>
             <div class='col s6'>
-              <a href='#' class="add-exercise waves-effect waves-light btn">Add Selected</a>
+              <a href='#' id="add-to-exercise" class="add-exercise waves-effect waves-light btn">Add Selected</a>
             </div>
           </div>
 
@@ -203,9 +246,9 @@
           <table id='diary-exercises-table' class='diary-exercises bordered highlight'>
             <thead>
               <th>Name</th>
-              <th>Calories</th>
+              <th id='sort-exercises-calories' class='asc'>Calories</th>
             </thead>
-            <tbody id='exercise-table-body'>
+            <tbody id='exercises-table-body'>
             </tbody>
           </table>
         </div>
