@@ -699,6 +699,48 @@ test.it('each meal table has a list of food and calories', function(){
     });
   })
 
+  test.it('clears checkboxes from foods table after add is clicked and the rows are added', function(){
+    driver.get('http://localhost:8080/');
+
+    var data = JSON.stringify([{name: 'banana', calories: '300'}, {name: 'Chocolate', calories: '300'}]);
+    driver.executeScript("window.localStorage.setItem('foods','" +data+ "');");
+
+    driver.get('http://localhost:8080/');
+
+    addToBreakfastButton = driver.findElement({id: 'add-to-breakfast'});
+    bananaCheckBox       = driver.findElement({css: 'input#banana'});
+    chocolateCheckBox    = driver.findElement({css: 'input#Chocolate'}) ;
+
+    driver.executeScript("arguments[0].click();", bananaCheckBox);
+    driver.executeScript("arguments[0].click();", chocolateCheckBox);
+    addToBreakfastButton.click();
+
+    driver.findElements({css: 'input[type=checkbox]:checked'}).then(function(value) {
+      assert.deepEqual(value, []);
+    })
+  })
+
+  test.it('clears checkboxes from exercises table after add is clicked and the rows are added', function(){
+    driver.get('http://localhost:8080/');
+
+    var data = JSON.stringify([{name: 'running', calories: '555'}, {name: 'swimming', calories: '9999'}]);
+    driver.executeScript("window.localStorage.setItem('exercises','" +data+ "');");
+
+    driver.get('http://localhost:8080/');
+
+    addToExerciseButton = driver.findElement({id: 'add-to-exercise'});
+    runningCheckBox      = driver.findElement({css: 'input#running'});
+    swimmingCheckBox     = driver.findElement({css: 'input#swimming'}) ;
+
+    driver.executeScript("arguments[0].click();", runningCheckBox);
+    driver.executeScript("arguments[0].click();", swimmingCheckBox);
+    addToExerciseButton.click();
+
+    driver.findElements({css: 'input[type=checkbox]:checked'}).then(function(value) {
+      assert.deepEqual(value, []);
+    })
+  })
+
   test.it("reroutes to the exercise page when you click 'Create New' in the exercises section", function() {
     driver.get('http://localhost:8080/');
 
@@ -928,11 +970,11 @@ test.it('each meal table has a list of food and calories', function(){
   test.it("Update calorie totals after adding exercise", function() {
     driver.get('http://localhost:8080/');
 
-    var foodData = [{name: 'Running', calories: '500'}];
+    var exerciseData = [{name: 'Running', calories: '500'}];
 
-    foodsJSON = JSON.stringify(foodData);
+    exerciseJSON = JSON.stringify(exerciseData);
 
-    driver.executeScript(`window.localStorage.setItem('exercises', '${foodsJSON}')`);
+    driver.executeScript(`window.localStorage.setItem('exercises', '${exerciseJSON}')`);
 
     driver.get('http://localhost:8080/');
 
@@ -967,7 +1009,199 @@ test.it('each meal table has a list of food and calories', function(){
     driver.findElement({css: '#totals-remaining-calories'}).getText().then(function(text) {
       assert.equal(text, '2000');
     })
-
   });
 
+  test.it('orders the foods ascending by clicking on calories once', function() {
+    driver.get('http://localhost:8080/');
+
+    foodData = [{name: 'banana', calories: '200'},
+                {name: 'bread', calories: '300'},
+                {name: 'cake', calories: '100'}]
+
+    foodsJSON = JSON.stringify(foodData);
+
+    driver.executeScript(`window.localStorage.setItem('foods', '${foodsJSON}')`);
+
+    driver.get('http://localhost:8080/');
+
+    caloriesTableHeader = driver.findElement({css: '#sort-food-calories'});
+
+    driver.findElement({css: '#foods-table-body tr:nth-of-type(1) td:nth-child(1)'}).getText().then(function(text){
+      assert.equal(text, 'cake');
+    })
+    driver.findElement({css: '#foods-table-body tr:nth-of-type(2) td:nth-child(1)'}).getText().then(function(text){
+      assert.equal(text, 'bread');
+    })
+    driver.findElement({css: '#foods-table-body tr:nth-of-type(3) td:nth-child(1)'}).getText().then(function(text){
+      assert.equal(text, 'banana');
+    });
+
+    caloriesTableHeader.click();
+
+    driver.findElement({css: '#foods-table-body tr:nth-of-type(1) td:nth-child(1)'}).getText().then(function(text){
+      assert.equal(text, 'cake');
+    })
+    driver.findElement({css: '#foods-table-body tr:nth-of-type(2) td:nth-child(1)'}).getText().then(function(text){
+      assert.equal(text, 'banana');
+    })
+    driver.findElement({css: '#foods-table-body tr:nth-of-type(3) td:nth-child(1)'}).getText().then(function(text){
+      assert.equal(text, 'bread');
+    });
+  });
+
+  test.it('orders the foods descending by clicking on calories twice', function() {
+    driver.get('http://localhost:8080/');
+
+    foodData = [{name: 'banana', calories: '200'},
+                {name: 'bread', calories: '300'},
+                {name: 'cake', calories: '100'}]
+
+    foodsJSON = JSON.stringify(foodData);
+
+    driver.executeScript(`window.localStorage.setItem('foods', '${foodsJSON}')`);
+
+    driver.get('http://localhost:8080/');
+
+    caloriesTableHeader = driver.findElement({css: '#sort-food-calories'});
+
+    caloriesTableHeader.click();
+    caloriesTableHeader.click();
+
+    driver.findElement({css: '#foods-table-body tr:nth-of-type(1) td:nth-child(1)'}).getText().then(function(text){
+      assert.equal(text, 'bread');
+    })
+    driver.findElement({css: '#foods-table-body tr:nth-of-type(2) td:nth-child(1)'}).getText().then(function(text){
+      assert.equal(text, 'banana');
+    })
+    driver.findElement({css: '#foods-table-body tr:nth-of-type(3) td:nth-child(1)'}).getText().then(function(text){
+      assert.equal(text, 'cake');
+    });
+  })
+
+  test.it('reverts to original foods ordering by clicking on calories three times', function() {
+    driver.get('http://localhost:8080/');
+
+    foodData = [{name: 'banana', calories: '200'},
+                {name: 'bread', calories: '300'},
+                {name: 'cake', calories: '100'}]
+
+    foodsJSON = JSON.stringify(foodData);
+
+    driver.executeScript(`window.localStorage.setItem('foods', '${foodsJSON}')`);
+
+    driver.get('http://localhost:8080/');
+
+    caloriesTableHeader = driver.findElement({css: '#sort-food-calories'});
+
+    caloriesTableHeader.click();
+    caloriesTableHeader.click();
+    caloriesTableHeader.click();
+
+    driver.findElement({css: '#foods-table-body tr:nth-of-type(1) td:nth-child(1)'}).getText().then(function(text){
+      assert.equal(text, 'cake');
+    })
+    driver.findElement({css: '#foods-table-body tr:nth-of-type(2) td:nth-child(1)'}).getText().then(function(text){
+      assert.equal(text, 'bread');
+    })
+    driver.findElement({css: '#foods-table-body tr:nth-of-type(3) td:nth-child(1)'}).getText().then(function(text){
+      assert.equal(text, 'banana');
+    });
+  })
+
+  test.it('orders the exercises ascending by clicking on calories once', function() {
+    driver.get('http://localhost:8080/');
+
+    exercisesData = [{name: 'run', calories: '200'},
+                {name: 'swim', calories: '300'},
+                {name: 'walk', calories: '100'}]
+
+    exercisesJSON = JSON.stringify(exercisesData);
+
+    driver.executeScript(`window.localStorage.setItem('exercises', '${exercisesJSON}')`);
+
+    driver.get('http://localhost:8080/');
+
+    caloriesTableHeader = driver.findElement({css: '#sort-exercises-calories'});
+
+    driver.findElement({css: '#exercises-table-body tr:nth-of-type(1) td:nth-child(1)'}).getText().then(function(text){
+      assert.equal(text, 'walk');
+    })
+    driver.findElement({css: '#exercises-table-body tr:nth-of-type(2) td:nth-child(1)'}).getText().then(function(text){
+      assert.equal(text, 'swim');
+    })
+    driver.findElement({css: '#exercises-table-body tr:nth-of-type(3) td:nth-child(1)'}).getText().then(function(text){
+      assert.equal(text, 'run');
+    });
+
+    caloriesTableHeader.click();
+
+    driver.findElement({css: '#exercises-table-body tr:nth-of-type(1) td:nth-child(1)'}).getText().then(function(text){
+      assert.equal(text, 'walk');
+    })
+    driver.findElement({css: '#exercises-table-body tr:nth-of-type(2) td:nth-child(1)'}).getText().then(function(text){
+      assert.equal(text, 'run');
+    })
+    driver.findElement({css: '#exercises-table-body tr:nth-of-type(3) td:nth-child(1)'}).getText().then(function(text){
+      assert.equal(text, 'swim');
+    });
+  });
+
+  test.it('orders the exercises descending by clicking on calories twice', function() {
+    driver.get('http://localhost:8080/');
+
+    exercisesData = [{name: 'run', calories: '200'},
+                {name: 'swim', calories: '300'},
+                {name: 'walk', calories: '100'}]
+
+    exercisesJSON = JSON.stringify(exercisesData);
+
+    driver.executeScript(`window.localStorage.setItem('exercises', '${exercisesJSON}')`);
+
+    driver.get('http://localhost:8080/');
+
+    caloriesTableHeader = driver.findElement({css: '#sort-exercises-calories'});
+
+    caloriesTableHeader.click();
+    caloriesTableHeader.click();
+
+    driver.findElement({css: '#exercises-table-body tr:nth-of-type(1) td:nth-child(1)'}).getText().then(function(text){
+      assert.equal(text, 'swim');
+    })
+    driver.findElement({css: '#exercises-table-body tr:nth-of-type(2) td:nth-child(1)'}).getText().then(function(text){
+      assert.equal(text, 'run');
+    })
+    driver.findElement({css: '#exercises-table-body tr:nth-of-type(3) td:nth-child(1)'}).getText().then(function(text){
+      assert.equal(text, 'walk');
+    });
+  })
+
+  test.it('reverts to original exercise ordering by clicking on calories three times', function() {
+    driver.get('http://localhost:8080/');
+
+    exercisesData = [{name: 'run', calories: '200'},
+                {name: 'swim', calories: '300'},
+                {name: 'walk', calories: '100'}]
+
+    exercisesJSON = JSON.stringify(exercisesData);
+
+    driver.executeScript(`window.localStorage.setItem('exercises', '${exercisesJSON}')`);
+
+    driver.get('http://localhost:8080/');
+
+    caloriesTableHeader = driver.findElement({css: '#sort-exercises-calories'});
+
+    caloriesTableHeader.click();
+    caloriesTableHeader.click();
+    caloriesTableHeader.click();
+
+    driver.findElement({css: '#exercises-table-body tr:nth-of-type(1) td:nth-child(1)'}).getText().then(function(text){
+      assert.equal(text, 'walk');
+    })
+    driver.findElement({css: '#exercises-table-body tr:nth-of-type(2) td:nth-child(1)'}).getText().then(function(text){
+      assert.equal(text, 'swim');
+    })
+    driver.findElement({css: '#exercises-table-body tr:nth-of-type(3) td:nth-child(1)'}).getText().then(function(text){
+      assert.equal(text, 'run');
+    });
+  })
 })
