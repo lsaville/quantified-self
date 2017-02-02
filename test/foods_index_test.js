@@ -1,5 +1,5 @@
 var assert    = require('chai').assert;
-var expect     = require('chai').expect;
+var expect    = require('chai').expect;
 var webdriver = require('selenium-webdriver');
 var test      = require('selenium-webdriver/testing');
 
@@ -177,7 +177,9 @@ test.describe('testing foods.html', function() {
     calories.sendKeys('30');
     submitButton.click();
 
-    driver.findElement({css: '.delete-foods'}).click();
+    foodDelete = driver.findElement({css: '.delete-foods'});
+    driver.sleep(1000);
+    foodDelete.click();
 
     driver.findElement({id: 'foods-table-body'}).getText().then(function(value){
       expect(value).to.be.empty;
