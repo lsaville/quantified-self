@@ -49,57 +49,7 @@
 	__webpack_require__(2);
 
 	var Exercises = __webpack_require__(6);
-
-	//editable ----------------------------------------------------------------------
-
-	function makeEditable(table) {
-	  $('.' + table).on('click', 'td', function (event) {
-	    var className = classNameClickedRow(this);
-	    var oldName = recordCellHtmlName(className);
-	    var oldCalories = recordCellHtmlCalories(className);
-	    var el = event.target;
-	    addEventListenerForEnter(table, className, oldName, oldCalories, el);
-	    addEventListenerForMousedown(table, className, oldName, oldCalories, el);
-	  });
-	};
-
-	function recordCellHtmlName(className) {
-	  return $('.' + className).children('td')[0].innerHTML;
-	};
-
-	function recordCellHtmlCalories(className) {
-	  return $('.' + className).children('td')[1].innerHTML;
-	};
-
-	function classNameClickedRow(clicked) {
-	  return clicked.parentElement.className;
-	};
-
-	function addEventListenerForEnter(table, className, oldName, oldCalories, el) {
-	  document.getElementById(table + '-table').addEventListener('keydown', function (event) {
-	    if (event.keyCode == 13 || event.keyCode == 9) {
-	      event.preventDefault();
-	      var newName = recordCellHtmlName(className);
-	      var newCalories = recordCellHtmlCalories(className);
-	      editExercisesStorage(newName, newCalories, oldName, oldCalories);
-	      el.blur();
-	    }
-	  }, true);
-	};
-
-	function addEventListenerForMousedown(table, className, oldName, oldCalories, el) {
-	  document.addEventListener('mousedown', function (event) {
-	    var newName = recordCellHtmlName(className);
-	    var newCalories = recordCellHtmlCalories(className);
-	    editExercisesStorage(newName, newCalories, oldName, oldCalories);
-	    el.blur();
-	  }, true);
-	}
-
-	function editExercisesStorage(newName, newCalories, oldName, oldCalories) {
-	  var exercises = new Exercises(newName, newCalories);
-	  exercises.edit(oldName, oldCalories);
-	};
+	var Editable = __webpack_require__(9);
 
 	TableInitialize("exercises");
 
@@ -119,16 +69,18 @@
 	      }
 	    };
 	    $('tr').each(function (i) {
-	      $(this).removeClass('new-row');
+	      $(this).removeAttr('class');
 	      $(this).addClass("row" + i);
 	    });
 	  };
 	};
 
 	function addToTable(name, calories, table) {
-	  var row = '<tr id="editable" class="new-row" ><td contenteditable="true">' + name + '</td><td contenteditable="true">' + calories + '</td><td><a href="#" class="delete-' + table + ' material-icons">delete</a></td></tr>';
+	  var tempUniqClassName = (name + calories + table).replace(/\s+/g, '');
+	  var row = '<tr id="editable" class="' + tempUniqClassName + '" ><td contenteditable="true">' + name + '</td><td contenteditable="true">' + calories + '</td><td><a href="#" class="delete-' + table + ' material-icons">delete</a></td></tr>';
 	  $('.' + table + ' > tbody').prepend(row);
-	  makeEditable(table);
+	  var editable = new Editable();
+	  editable.make(table);
 	};
 
 	function deleteRow(row, table) {
@@ -27906,6 +27858,396 @@
 		return module;
 	}
 
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var $ = __webpack_require__(1);
+
+	var Exercises = __webpack_require__(6);
+	var Food = __webpack_require__(10);
+	var Breakfast = __webpack_require__(11);
+	var Lunch = __webpack_require__(12);
+	var Dinner = __webpack_require__(13);
+	var Snacks = __webpack_require__(14);
+	var Exercise = __webpack_require__(15);
+
+	function Editable() {};
+
+	Editable.prototype.make = function (table) {
+		$('.' + table).on('click', 'td', function (event) {
+			var className = classNameClickedRow(this);
+			var oldName = recordCellHtmlName(className);
+			var oldCalories = recordCellHtmlCalories(className);
+			var el = event.target;
+			addEventListenerForEnter(table, className, oldName, oldCalories, el);
+			addEventListenerForMousedown(table, className, oldName, oldCalories, el);
+		});
+
+		function recordCellHtmlName(className) {
+			return $('.' + className).children('td')[0].innerHTML;
+		};
+
+		function recordCellHtmlCalories(className) {
+			return $('.' + className).children('td')[1].innerHTML;
+		};
+
+		function classNameClickedRow(clicked) {
+			return $(clicked).parents('tr').attr('class');
+		};
+
+		function addEventListenerForEnter(table, className, oldName, oldCalories, el) {
+			document.getElementById(table + '-table').addEventListener('keydown', function (event) {
+				if (event.keyCode == 13 || event.keyCode == 9) {
+					event.preventDefault();
+					var newName = recordCellHtmlName(className);
+					var newCalories = recordCellHtmlCalories(className);
+					editCorrectTable(table, newName, newCalories, oldName, oldCalories);
+					el.blur();
+				}
+			}, true);
+		};
+
+		function addEventListenerForMousedown(table, className, oldName, oldCalories, el) {
+			document.addEventListener('mousedown', function (event) {
+				var newName = recordCellHtmlName(className);
+				var newCalories = recordCellHtmlCalories(className);
+				editCorrectTable(table, newName, newCalories, oldName, oldCalories);
+				el.blur();
+			}, true);
+		}
+
+		function editCorrectTable(table, newName, newCalories, oldName, oldCalories) {
+			switch (table) {
+				case 'foods':
+					editFoodStorage(newName, newCalories, oldName, oldCalories);
+					break;
+				case 'exercises':
+					editExercisesStorage(newName, newCalories, oldName, oldCalories);
+					break;
+				case 'diary-foods':
+					editFoodStorage(newName, newCalories, oldName, oldCalories);
+					break;
+				case 'diary-exercises':
+					editExercisesStorage(newName, newCalories, oldName, oldCalories);
+					break;
+				case 'breakfast':
+					editBreakfastStorage(newName, newCalories, oldName, oldCalories);
+					break;
+				case 'lunch':
+					editLunchStorage(newName, newCalories, oldName, oldCalories);
+					break;
+				case 'dinner':
+					editDinnerStorage(newName, newCalories, oldName, oldCalories);
+					break;
+				case 'snacks':
+					editSnacksStorage(newName, newCalories, oldName, oldCalories);
+					break;
+				case 'exercise':
+					editExerciseStorage(newName, newCalories, oldName, oldCalories);
+					break;
+			}
+		}
+
+		function editFoodStorage(newName, newCalories, oldName, oldCalories) {
+			var food = new Food(newName, newCalories);
+			food.edit(oldName, oldCalories);
+		};
+
+		function editExercisesStorage(newName, newCalories, oldName, oldCalories) {
+			var exercises = new Exercises(newName, newCalories);
+			exercises.edit(oldName, oldCalories);
+		};
+
+		function editBreakfastStorage(newName, newCalories, oldName, oldCalories) {
+			var breakfast = new Breakfast(newName, newCalories);
+			breakfast.edit($('#date').text(), oldName, oldCalories);
+		};
+
+		function editLunchStorage(newName, newCalories, oldName, oldCalories) {
+			var lunch = new Lunch(newName, newCalories);
+			lunch.edit($('#date').text(), oldName, oldCalories);
+		};
+
+		function editDinnerStorage(newName, newCalories, oldName, oldCalories) {
+			var dinner = new Dinner(newName, newCalories);
+			dinner.edit($('#date').text(), oldName, oldCalories);
+		};
+
+		function editSnacksStorage(newName, newCalories, oldName, oldCalories) {
+			var snacks = new Snacks(newName, newCalories);
+			snacks.edit($('#date').text(), oldName, oldCalories);
+		};
+
+		function editExerciseStorage(newName, newCalories, oldName, oldCalories) {
+			var exercise = new Exercise(newName, newCalories);
+			exercise.edit($('#date').text(), oldName, oldCalories);
+		};
+	};
+
+	module.exports = Editable;
+
+/***/ },
+/* 10 */
+/***/ function(module, exports) {
+
+	function Food(name, calories) {
+	  this.name = name;
+	  this.calories = calories;
+	}
+
+	Food.prototype.store = function () {
+	  var foodsJSON = localStorage.getItem('foods');
+	  if (!foodsJSON) {
+	    foodsJSON = '[]';
+	  };
+	  var foods = JSON.parse(foodsJSON);
+	  foods.push({ name: this.name, calories: this.calories });
+	  foodsJSON = JSON.stringify(foods);
+	  localStorage.setItem('foods', foodsJSON);
+	};
+
+	Food.prototype.delete = function () {
+	  var foodsJSON = localStorage.getItem('foods');
+	  var foods = JSON.parse(foodsJSON);
+	  _.remove(foods, element => {
+	    return element.name === this.name;
+	  });
+	  foodsJSON = JSON.stringify(foods);
+	  localStorage.setItem('foods', foodsJSON);
+	};
+
+	Food.prototype.edit = function (oldName, oldCalories) {
+	  var foodsJSON = localStorage.getItem('foods');
+	  var foods = JSON.parse(foodsJSON);
+	  var newindex = '';
+	  _.forEach(foods, function (food, index) {
+	    if (food.name === oldName) {
+	      return newindex = index;
+	    }
+	  });
+	  foods[newindex] = { name: this.name, calories: this.calories };
+	  foodsJSON = JSON.stringify(foods);
+	  localStorage.setItem('foods', foodsJSON);
+	};
+
+	module.exports = Food;
+
+/***/ },
+/* 11 */
+/***/ function(module, exports) {
+
+	function Breakfast(name, calories) {
+	  this.name = name;
+	  this.calories = calories;
+	}
+
+	Breakfast.prototype.store = function (date) {
+	  var dayJSON = localStorage.getItem(date);
+	  var day = JSON.parse(dayJSON);
+	  day.breakfast.push({ name: this.name, calories: this.calories });
+	  dayJSON = JSON.stringify(day);
+	  localStorage.setItem(date, dayJSON);
+	};
+
+	Breakfast.prototype.delete = function (date) {
+	  var dayJSON = localStorage.getItem(date);
+	  var day = JSON.parse(dayJSON);
+	  _.remove(day.breakfast, element => {
+	    return element.name === this.name;
+	  });
+	  dayJSON = JSON.stringify(day);
+	  localStorage.setItem(date, dayJSON);
+	};
+
+	Breakfast.prototype.edit = function (date, oldName, oldCalories) {
+	  var dayJSON = localStorage.getItem(date);
+	  var day = JSON.parse(dayJSON);
+	  var newindex = '';
+	  _.forEach(day.breakfast, function (breakfast, index) {
+	    if (breakfast.name === oldName) {
+	      return newindex = index;
+	    }
+	  });
+	  day.breakfast[newindex] = { name: this.name, calories: this.calories };
+	  dayJSON = JSON.stringify(day);
+	  localStorage.setItem(date, dayJSON);
+	};
+
+	module.exports = Breakfast;
+
+/***/ },
+/* 12 */
+/***/ function(module, exports) {
+
+	function Lunch(name, calories) {
+	  this.name = name;
+	  this.calories = calories;
+	}
+
+	Lunch.prototype.store = function (date) {
+	  var dayJSON = localStorage.getItem(date);
+	  var day = JSON.parse(dayJSON);
+	  day.lunch.push({ name: this.name, calories: this.calories });
+	  dayJSON = JSON.stringify(day);
+	  localStorage.setItem(date, dayJSON);
+	};
+
+	Lunch.prototype.delete = function (date) {
+	  var dayJSON = localStorage.getItem(date);
+	  var day = JSON.parse(dayJSON);
+	  _.remove(day.lunch, element => {
+	    return element.name === this.name;
+	  });
+	  dayJSON = JSON.stringify(day);
+	  localStorage.setItem(date, dayJSON);
+	};
+
+	Lunch.prototype.edit = function (date, oldName, oldCalories) {
+	  var dayJSON = localStorage.getItem(date);
+	  var day = JSON.parse(dayJSON);
+	  var newindex = '';
+	  _.forEach(day.lunch, function (lunch, index) {
+	    if (lunch.name === oldName) {
+	      return newindex = index;
+	    }
+	  });
+	  day.lunch[newindex] = { name: this.name, calories: this.calories };
+	  dayJSON = JSON.stringify(day);
+	  localStorage.setItem(date, dayJSON);
+	};
+
+	module.exports = Lunch;
+
+/***/ },
+/* 13 */
+/***/ function(module, exports) {
+
+	function Dinner(name, calories) {
+	  this.name = name;
+	  this.calories = calories;
+	}
+
+	Dinner.prototype.store = function (date) {
+	  var dayJSON = localStorage.getItem(date);
+	  var day = JSON.parse(dayJSON);
+	  day.dinner.push({ name: this.name, calories: this.calories });
+	  dayJSON = JSON.stringify(day);
+	  localStorage.setItem(date, dayJSON);
+	};
+
+	Dinner.prototype.delete = function (date) {
+	  var dayJSON = localStorage.getItem(date);
+	  var day = JSON.parse(dayJSON);
+	  _.remove(day.dinner, element => {
+	    return element.name === this.name;
+	  });
+	  dayJSON = JSON.stringify(day);
+	  localStorage.setItem(date, dayJSON);
+	};
+
+	Dinner.prototype.edit = function (date, oldName, oldCalories) {
+	  var dayJSON = localStorage.getItem(date);
+	  var day = JSON.parse(dayJSON);
+	  var newindex = '';
+	  _.forEach(day.dinner, function (dinner, index) {
+	    if (dinner.name === oldName) {
+	      return newindex = index;
+	    }
+	  });
+	  day.dinner[newindex] = { name: this.name, calories: this.calories };
+	  dayJSON = JSON.stringify(day);
+	  localStorage.setItem(date, dayJSON);
+	};
+
+	module.exports = Dinner;
+
+/***/ },
+/* 14 */
+/***/ function(module, exports) {
+
+	function Snacks(name, calories) {
+	  this.name = name;
+	  this.calories = calories;
+	}
+
+	Snacks.prototype.store = function (date) {
+	  var dayJSON = localStorage.getItem(date);
+	  var day = JSON.parse(dayJSON);
+	  day.snacks.push({ name: this.name, calories: this.calories });
+	  dayJSON = JSON.stringify(day);
+	  localStorage.setItem(date, dayJSON);
+	};
+
+	Snacks.prototype.delete = function (date) {
+	  var dayJSON = localStorage.getItem(date);
+	  var day = JSON.parse(dayJSON);
+	  _.remove(day.snacks, element => {
+	    return element.name === this.name;
+	  });
+	  dayJSON = JSON.stringify(day);
+	  localStorage.setItem(date, dayJSON);
+	};
+
+	Snacks.prototype.edit = function (date, oldName, oldCalories) {
+	  var dayJSON = localStorage.getItem(date);
+	  var day = JSON.parse(dayJSON);
+	  var newindex = '';
+	  _.forEach(day.snacks, function (snacks, index) {
+	    if (snacks.name === oldName) {
+	      return newindex = index;
+	    }
+	  });
+	  day.snacks[newindex] = { name: this.name, calories: this.calories };
+	  dayJSON = JSON.stringify(day);
+	  localStorage.setItem(date, dayJSON);
+	};
+
+	module.exports = Snacks;
+
+/***/ },
+/* 15 */
+/***/ function(module, exports) {
+
+	function Exercise(name, calories) {
+	  this.name = name;
+	  this.calories = calories;
+	}
+
+	Exercise.prototype.store = function (date) {
+	  var dayJSON = localStorage.getItem(date);
+	  var day = JSON.parse(dayJSON);
+	  day.exercise.push({ name: this.name, calories: this.calories });
+	  dayJSON = JSON.stringify(day);
+	  localStorage.setItem(date, dayJSON);
+	};
+
+	Exercise.prototype.delete = function (date) {
+	  var dayJSON = localStorage.getItem(date);
+	  var day = JSON.parse(dayJSON);
+	  _.remove(day.exercise, element => {
+	    return element.name === this.name;
+	  });
+	  dayJSON = JSON.stringify(day);
+	  localStorage.setItem(date, dayJSON);
+	};
+
+	Exercise.prototype.edit = function (date, oldName, oldCalories) {
+	  var dayJSON = localStorage.getItem(date);
+	  var day = JSON.parse(dayJSON);
+	  var newindex = '';
+	  _.forEach(day.exercise, function (exercise, index) {
+	    if (exercise.name === oldName) {
+	      return newindex = index;
+	    }
+	  });
+	  day.exercise[newindex] = { name: this.name, calories: this.calories };
+	  dayJSON = JSON.stringify(day);
+	  localStorage.setItem(date, dayJSON);
+	};
+
+	module.exports = Exercise;
 
 /***/ }
 /******/ ]);

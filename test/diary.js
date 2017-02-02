@@ -558,6 +558,7 @@ test.it('each meal table has a list of food and calories', function(){
 
     driver.get('http://localhost:8080/');
 
+
     addToBreakfastButton = driver.findElement({id: 'add-to-breakfast'});
     bananaCheckBox       = driver.findElement({css: 'input#banana'});
     chocolateCheckBox    = driver.findElement({css: 'input#Chocolate'}) ;
@@ -740,4 +741,274 @@ test.it('each meal table has a list of food and calories', function(){
     })
   })
 
+  test.it("reroutes to the exercise page when you click 'Create New' in the exercises section", function() {
+    driver.get('http://localhost:8080/');
+
+    createNewExerciseButton = driver.findElement({css: '#new-exercise-button'});
+    createNewExerciseButton.click();
+
+    var url = driver.getCurrentUrl().then(function(value){
+      assert.equal(value, 'http://localhost:8080/exercises.html');
+    })
+  })
+
+  test.it("Has a totals table in diary", function() {
+    driver.get('http://localhost:8080/');
+
+    table = driver.findElement({css: '#totals-table'});
+
+    table.getText().then(function(text) {
+      assert.include(text, 'Goal Calories');
+    })
+
+    table.getText().then(function(text) {
+      assert.include(text, 'Calories Consumed');
+    })
+
+    table.getText().then(function(text) {
+      assert.include(text, 'Calories Burned');
+    })
+
+    table.getText().then(function(text) {
+      assert.include(text, 'Remaining Calories');
+    })
+  });
+
+  test.it("Color change for total calories highlight green or red depending on positive or negative", function() {
+    driver.get('http://localhost:8080/');
+
+    var date    = new Date;
+    date        = date.toDateString();
+
+    var day =  { breakfast: [],
+                lunch:     [],
+                dinner:    [],
+                snacks:    [],
+                exercise:  [{name: 'running', calories: '400'}]
+              }
+    dayJSON = JSON.stringify(day);
+
+    driver.executeScript(`window.localStorage.setItem('${date}', '${dayJSON}')`);
+    driver.get('http://localhost:8080/');
+
+    driver.findElement({css: '#totals-calories-burned'}).getText().then(function(text) {
+      assert.equal(text, '400');
+    })
+
+    var tableWithGreenAttr = driver.findElement({css: '.totals .special-green'})
+
+    tableWithGreenAttr.getText().then(function(text) {
+      assert.equal(text, '400')
+    })
+
+  });
+
+  test.it("Color change for remaining calories turns green when calories not above limit", function() {
+    driver.get('http://localhost:8080/');
+
+    var date    = new Date;
+    date        = date.toDateString();
+
+    var day =  { breakfast: [{name: 'Apple', calories: '400'}],
+                lunch:     [{name: 'Peach', calories: '500'}],
+                dinner:    [],
+                snacks:    [],
+                exercise:  []
+              }
+    dayJSON = JSON.stringify(day);
+
+    driver.executeScript(`window.localStorage.setItem('${date}', '${dayJSON}')`);
+    driver.get('http://localhost:8080/');
+
+    driver.findElement({css: '#totals-remaining-calories'}).getText().then(function(text) {
+      assert.equal(text, '1100');
+    })
+
+    var tableWithGreenAttr = driver.findElement({css: '.totals .special-green'})
+
+    tableWithGreenAttr.getText().then(function(text) {
+      assert.equal(text, '1100')
+    })
+
+  });
+
+  test.it("Color change for remaining calories turns red when calories is above limit", function() {
+    driver.get('http://localhost:8080/');
+
+    var date    = new Date;
+    date        = date.toDateString();
+
+    var day =  { breakfast: [{name: 'Apple', calories: '1100'}],
+                lunch:     [{name: 'Peach', calories: '1100'}],
+                dinner:    [],
+                snacks:    [],
+                exercise:  []
+              }
+    dayJSON = JSON.stringify(day);
+
+    driver.executeScript(`window.localStorage.setItem('${date}', '${dayJSON}')`);
+    driver.get('http://localhost:8080/');
+
+    driver.findElement({css: '#totals-remaining-calories'}).getText().then(function(text) {
+      assert.equal(text, '-200');
+    })
+
+    var tableWithGreenAttr = driver.findElement({css: '.totals .special-red'})
+
+    tableWithGreenAttr.getText().then(function(text) {
+      assert.equal(text, '-200')
+    })
+  });
+
+
+  test.it("Update calorie totals after adding food", function() {
+    driver.get('http://localhost:8080/');
+
+    var foodData = [{name: 'Apple', calories: '500'}];
+
+    foodsJSON = JSON.stringify(foodData);
+
+    driver.executeScript(`window.localStorage.setItem('foods', '${foodsJSON}')`);
+
+    driver.get('http://localhost:8080/');
+
+    elementChkBox = driver.findElement({css: 'input[type=checkbox]'})
+
+    driver.executeScript("arguments[0].click();", elementChkBox);
+
+    driver.findElement({css: '#add-to-breakfast'}).click();
+
+    driver.findElement({css: '#totals-calories-consumed'}).getText().then(function(text) {
+      assert.equal(text, '500');
+    })
+
+    driver.findElement({css: '#totals-calories-burned'}).getText().then(function(text) {
+      assert.equal(text, '0');
+    })
+
+    driver.findElement({css: '#totals-remaining-calories'}).getText().then(function(text) {
+      assert.equal(text, '1500');
+    })
+
+  });
+
+  test.it("Update calorie totals after adding exercise", function() {
+    driver.get('http://localhost:8080/');
+
+    var foodData = [{name: 'Running', calories: '500'}];
+
+    foodsJSON = JSON.stringify(foodData);
+
+    driver.executeScript(`window.localStorage.setItem('exercises', '${foodsJSON}')`);
+
+    driver.get('http://localhost:8080/');
+
+    elementChkBox = driver.findElement({css: 'input[type=checkbox]'})
+
+    driver.executeScript("arguments[0].click();", elementChkBox);
+
+    driver.findElement({css: '#add-to-exercise'}).click();
+
+    driver.findElement({css: '#totals-calories-consumed'}).getText().then(function(text) {
+      assert.equal(text, '0');
+    })
+
+    driver.findElement({css: '#totals-calories-burned'}).getText().then(function(text) {
+      assert.equal(text, '500');
+    })
+
+    driver.findElement({css: '#totals-remaining-calories'}).getText().then(function(text) {
+      assert.equal(text, '2000');
+    })
+  });
+
+
+  test.it("Update calorie totals after adding food", function() {
+    driver.get('http://localhost:8080/');
+
+    var foodData = [{name: 'Apple', calories: '500'}];
+
+    foodsJSON = JSON.stringify(foodData);
+
+    driver.executeScript(`window.localStorage.setItem('foods', '${foodsJSON}')`);
+
+    driver.get('http://localhost:8080/');
+
+    elementChkBox = driver.findElement({css: 'input[type=checkbox]'})
+
+    driver.executeScript("arguments[0].click();", elementChkBox);
+
+    driver.findElement({css: '#add-to-breakfast'}).click();
+
+    driver.findElement({css: '#totals-calories-consumed'}).getText().then(function(text) {
+      assert.equal(text, '500');
+    })
+
+    driver.findElement({css: '#totals-calories-burned'}).getText().then(function(text) {
+      assert.equal(text, '0');
+    })
+
+    driver.findElement({css: '#totals-remaining-calories'}).getText().then(function(text) {
+      assert.equal(text, '1500');
+    })
+
+    driver.findElement({css: '.delete-breakfast'}).click();
+
+    driver.findElement({css: '#totals-calories-consumed'}).getText().then(function(text) {
+      assert.equal(text, '0');
+    })
+
+    driver.findElement({css: '#totals-calories-burned'}).getText().then(function(text) {
+      assert.equal(text, '0');
+    })
+
+    driver.findElement({css: '#totals-remaining-calories'}).getText().then(function(text) {
+      assert.equal(text, '2000');
+    })
+  });
+
+  test.it("Update calorie totals after adding exercise", function() {
+    driver.get('http://localhost:8080/');
+
+    var foodData = [{name: 'Running', calories: '500'}];
+
+    foodsJSON = JSON.stringify(foodData);
+
+    driver.executeScript(`window.localStorage.setItem('exercises', '${foodsJSON}')`);
+
+    driver.get('http://localhost:8080/');
+
+    elementChkBox = driver.findElement({css: 'input[type=checkbox]'})
+
+    driver.executeScript("arguments[0].click();", elementChkBox);
+
+    driver.findElement({css: '#add-to-exercise'}).click();
+
+    driver.findElement({css: '#totals-calories-consumed'}).getText().then(function(text) {
+      assert.equal(text, '0');
+    })
+
+    driver.findElement({css: '#totals-calories-burned'}).getText().then(function(text) {
+      assert.equal(text, '500');
+    })
+
+    driver.findElement({css: '#totals-remaining-calories'}).getText().then(function(text) {
+      assert.equal(text, '2000');
+    })
+
+    driver.findElement({css: '.delete-exercise'}).click();
+
+    driver.findElement({css: '#totals-calories-consumed'}).getText().then(function(text) {
+      assert.equal(text, '0');
+    })
+
+    driver.findElement({css: '#totals-calories-burned'}).getText().then(function(text) {
+      assert.equal(text, '0');
+    })
+
+    driver.findElement({css: '#totals-remaining-calories'}).getText().then(function(text) {
+      assert.equal(text, '2000');
+    })
+
+  });
 })

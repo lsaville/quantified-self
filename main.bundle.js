@@ -51,122 +51,15 @@
 
 	// meal vars
 	var Exercises = __webpack_require__(6);
-	var Food = __webpack_require__(9);
-	var Breakfast = __webpack_require__(10);
-	var Lunch = __webpack_require__(11);
-	var Dinner = __webpack_require__(12);
-	var Snacks = __webpack_require__(13);
-	var Exercise = __webpack_require__(14);
-
-	//editable ----------------------------------------------------------------------
+	var Food = __webpack_require__(10);
+	var Breakfast = __webpack_require__(11);
+	var Lunch = __webpack_require__(12);
+	var Dinner = __webpack_require__(13);
+	var Snacks = __webpack_require__(14);
+	var Exercise = __webpack_require__(15);
+	var Editable = __webpack_require__(9);
 
 	initializeDays();
-
-	function makeEditable(table) {
-	  $('.' + table).on('click', 'td', function (event) {
-	    var className = classNameClickedRow(this);
-	    var oldName = recordCellHtmlName(className);
-	    var oldCalories = recordCellHtmlCalories(className);
-	    var el = event.target;
-	    addEventListenerForEnter(table, className, oldName, oldCalories, el);
-	    addEventListenerForMousedown(table, className, oldName, oldCalories, el);
-	  });
-	};
-
-	function recordCellHtmlName(className) {
-	  return $('.' + className).children('td')[0].innerHTML;
-	};
-
-	function recordCellHtmlCalories(className) {
-	  return $('.' + className).children('td')[1].innerHTML;
-	};
-
-	function classNameClickedRow(clicked) {
-	  return $(clicked).parents('tr').attr('class');
-	};
-
-	function addEventListenerForEnter(table, className, oldName, oldCalories, el) {
-	  document.getElementById(table + '-table').addEventListener('keydown', function (event) {
-	    if (event.keyCode == 13 || event.keyCode == 9) {
-	      event.preventDefault();
-	      var newName = recordCellHtmlName(className);
-	      var newCalories = recordCellHtmlCalories(className);
-	      editCorrectTable(table, newName, newCalories, oldName, oldCalories);
-	      el.blur();
-	    }
-	  }, true);
-	};
-
-	function addEventListenerForMousedown(table, className, oldName, oldCalories, el) {
-	  document.addEventListener('mousedown', function (event) {
-	    var newName = recordCellHtmlName(className);
-	    var newCalories = recordCellHtmlCalories(className);
-	    editCorrectTable(table, newName, newCalories, oldName, oldCalories);
-	    el.blur();
-	  }, true);
-	}
-
-	function editCorrectTable(table, newName, newCalories, oldName, oldCalories) {
-	  switch (table) {
-	    case 'diary-foods':
-	      editFoodStorage(newName, newCalories, oldName, oldCalories);
-	      break;
-	    case 'diary-exercises':
-	      editExercisesStorage(newName, newCalories, oldName, oldCalories);
-	      break;
-	    case 'breakfast':
-	      editBreakfastStorage(newName, newCalories, oldName, oldCalories);
-	      break;
-	    case 'lunch':
-	      editLunchStorage(newName, newCalories, oldName, oldCalories);
-	      break;
-	    case 'dinner':
-	      editDinnerStorage(newName, newCalories, oldName, oldCalories);
-	      break;
-	    case 'snacks':
-	      editSnacksStorage(newName, newCalories, oldName, oldCalories);
-	      break;
-	    case 'exercise':
-	      editExerciseStorage(newName, newCalories, oldName, oldCalories);
-	      break;
-	  }
-	}
-
-	function editFoodStorage(newName, newCalories, oldName, oldCalories) {
-	  var food = new Food(newName, newCalories);
-	  food.edit($('#date').text(), oldName, oldCalories);
-	};
-
-	function editExercisesStorage(newName, newCalories, oldName, oldCalories) {
-	  var exercises = new Exercises(newName, newCalories);
-	  exercises.edit($('#date').text(), oldName, oldCalories);
-	};
-
-	function editBreakfastStorage(newName, newCalories, oldName, oldCalories) {
-	  var breakfast = new Breakfast(newName, newCalories);
-	  breakfast.edit($('#date').text(), oldName, oldCalories);
-	};
-
-	function editLunchStorage(newName, newCalories, oldName, oldCalories) {
-	  var lunch = new Lunch(newName, newCalories);
-	  lunch.edit($('#date').text(), oldName, oldCalories);
-	};
-
-	function editDinnerStorage(newName, newCalories, oldName, oldCalories) {
-	  var dinner = new Dinner(newName, newCalories);
-	  dinner.edit($('#date').text(), oldName, oldCalories);
-	};
-
-	function editSnacksStorage(newName, newCalories, oldName, oldCalories) {
-	  var snacks = new Snacks(newName, newCalories);
-	  snacks.edit($('#date').text(), oldName, oldCalories);
-	};
-
-	function editExerciseStorage(newName, newCalories, oldName, oldCalories) {
-	  var exercise = new Exercise(newName, newCalories);
-	  exercise.edit($('#date').text(), oldName, oldCalories);
-	};
-
 	makeTables();
 
 	// food to meal table
@@ -204,15 +97,26 @@
 	};
 
 	function addToTable(name, calories, table) {
-	  var row = '<tr id="editable" class="new-row" ><td contenteditable="true">' + name + '</td><td contenteditable="true">' + calories + '</td><td><a href="#" class="delete-' + table + ' material-icons">delete</a></td></tr>';
+	  var tempUniqClassName = (name + calories + table).replace(/\s+/g, '');
+	  var row = '<tr id="editable" class="' + tempUniqClassName + '" ><td contenteditable="true">' + name + '</td><td contenteditable="true">' + calories + '</td><td><a href="#" class="delete-' + table + ' material-icons">delete</a></td></tr>';
 	  $('.' + table + ' > tbody').prepend(row);
-	  makeEditable(table);
+	  var editable = new Editable();
+	  editable.make(table);
 	  calculateCaloriesTotal(table);
 	  calculateRemainingCalories(table);
 	  caloriesConsumedTotal();
 	  caloriesBurnedTotal();
 	  caloriesRemainingTotal();
 	};
+
+	function addToCheckBoxTable(name, calories, table) {
+	  var row = '<tr id="editable" class="new-row" ><td contenteditable="true">' + name + '</td><td contenteditable="true">' + calories + '</td><td><input type="checkbox" id="' + name + '"/><label for="' + name + '"></label></td></tr>';
+	  $('.' + table + ' > tbody').prepend(row);
+	  var editable = new Editable();
+	  editable.make(table);
+	};
+
+	// Calculations ------------------------------
 
 	function calculateCaloriesTotal(table) {
 	  var sum = addCalories(table);
@@ -273,7 +177,7 @@
 	}
 
 	function addTotalCaloriesConsumed() {
-	  return addCalories('breakfast') + addCalories('lunch') + addCalories('dinner');+addCalories('snacks');
+	  return addCalories('breakfast') + addCalories('lunch') + addCalories('dinner') + addCalories('snacks');
 	}
 
 	function caloriesConsumedTotal() {
@@ -299,7 +203,37 @@
 	  var row = '<tr id="editable" class="new-row" ><td contenteditable="true">' + name + '</td><td contenteditable="true">' + calories + '</td><td><input type="checkbox" id="' + name + '"/><label for="' + name + '"></label></td></tr>';
 	  $('.' + table + ' > tbody').prepend(row);
 	  makeEditable(table);
+=======
+>>>>>>> origin/development
 	};
+
+	function addTotalCaloriesBurned() {
+	  return addCalories('exercise');
+	}
+
+	function caloriesBurnedTotal() {
+	  var sum = addTotalCaloriesBurned();
+	  var cell = $('#totals-calories-burned');
+	  cell.text(sum);
+	  cell.removeClass('special-green');
+	  if (sum > 0) {
+	    cell.addClass('special-green');
+	  }
+	};
+
+	function caloriesRemainingTotal() {
+	  var sum = parseInt($('#totals-goal-calories').text(), 10) - addTotalCaloriesConsumed();
+	  var cell = $('#totals-remaining-calories');
+	  cell.text(sum);
+	  cell.removeClass('special-red special-green');
+	  if (sum < 0) {
+	    cell.addClass('special-red');
+	  } else if (sum > 0) {
+	    cell.addClass('special-green');
+	  }
+	}
+
+	// Delete-------------------------------------
 
 	function deleteRow(row, table) {
 	  var doomedRow = $(row).parents('tr');
@@ -361,6 +295,8 @@
 	  }
 	}
 
+	//  Storing checked box info ------------------------
+
 	function checkedBoxInfo(table, fromTable) {
 	  var meals = $('.diary-' + fromTable + ' input[type=checkbox]:checked');
 	  _.forEach(meals, function (meal, index) {
@@ -395,7 +331,6 @@
 	      break;
 	  }
 	}
-
 	// Breakfast Diary-------------------------------------------------------------------------
 
 	$('.breakfast').on('click', '.delete-breakfast', function (event) {
@@ -461,7 +396,8 @@
 	  $('.diary-exercises input[type=checkbox]').prop('checked', false);
 	});
 
-	// Filter
+	// Filter----------------------------------------
+
 	function displayDate(date) {
 	  $('#date').text(date);
 	}
@@ -543,6 +479,96 @@
 	    }
 	  }
 	});
+
+	// sortable ---------------------------
+
+	$('.diary-foods').on('click', '#sort-food-calories', function () {
+	  if (this.className === 'asc') {
+	    sortCalories("diary-foods-table");
+	    this.removeClass;
+	    this.className = 'desc';
+	  } else if (this.className === 'desc') {
+	    sortReverseCalories("diary-foods-table");
+	    this.removeClass;
+	    this.className = 'normal';
+	  } else {
+	    nukeRows('foods', $('#foods-table-body'));
+	    TableInitialize("diary-foods");
+	    this.removeClass;
+	    this.className = 'asc';
+	  }
+	});
+
+	$('.diary-exercises').on('click', '#sort-exercises-calories', function () {
+	  if (this.className === 'asc') {
+	    sortCalories('diary-exercises-table');
+	    this.removeClass;
+	    this.className = 'desc';
+	  } else if (this.className === 'desc') {
+	    sortReverseCalories('diary-exercises-table');
+	    this.removeClass;
+	    this.className = 'normal';
+	  } else {
+	    nukeRows('exercises', $('#exercises-table-body'));
+	    TableInitialize("diary-exercises");
+	    this.removeClass;
+	    this.className = 'asc';
+	  }
+	});
+
+	function sortCalories(table) {
+	  var table, rows, switching, i, x, y, shouldSwitch;
+	  table = document.getElementById(table);
+	  switching = true;
+
+	  while (switching) {
+	    switching = false;
+	    rows = table.getElementsByTagName("tr");
+
+	    for (i = 1; i < rows.length - 1; i++) {
+	      shouldSwitch = false;
+	      x = rows[i].getElementsByTagName("TD")[1];
+	      y = rows[i + 1].getElementsByTagName("TD")[1];
+	      x = parseInt(x.innerHTML, 10);
+	      y = parseInt(y.innerHTML, 10);
+	      if (x > y) {
+	        shouldSwitch = true;
+	        break;
+	      }
+	    }
+	    if (shouldSwitch) {
+	      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+	      switching = true;
+	    }
+	  }
+	};
+
+	function sortReverseCalories(table) {
+	  var table, rows, switching, i, x, y, shouldSwitch;
+	  table = document.getElementById(table);
+	  switching = true;
+
+	  while (switching) {
+	    switching = false;
+	    rows = table.getElementsByTagName("tr");
+
+	    for (i = 1; i < rows.length - 1; i++) {
+	      shouldSwitch = false;
+	      x = rows[i].getElementsByTagName("TD")[1];
+	      y = rows[i + 1].getElementsByTagName("TD")[1];
+	      x = parseInt(x.innerHTML, 10);
+	      y = parseInt(y.innerHTML, 10);
+	      if (x < y) {
+	        shouldSwitch = true;
+	        break;
+	      }
+	    }
+	    if (shouldSwitch) {
+	      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+	      switching = true;
+	    }
+	  }
+	};
 
 /***/ },
 /* 1 */
@@ -28275,6 +28301,135 @@
 
 /***/ },
 /* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var $ = __webpack_require__(1);
+
+	var Exercises = __webpack_require__(6);
+	var Food = __webpack_require__(10);
+	var Breakfast = __webpack_require__(11);
+	var Lunch = __webpack_require__(12);
+	var Dinner = __webpack_require__(13);
+	var Snacks = __webpack_require__(14);
+	var Exercise = __webpack_require__(15);
+
+	function Editable() {};
+
+	Editable.prototype.make = function (table) {
+		$('.' + table).on('click', 'td', function (event) {
+			var className = classNameClickedRow(this);
+			var oldName = recordCellHtmlName(className);
+			var oldCalories = recordCellHtmlCalories(className);
+			var el = event.target;
+			addEventListenerForEnter(table, className, oldName, oldCalories, el);
+			addEventListenerForMousedown(table, className, oldName, oldCalories, el);
+		});
+
+		function recordCellHtmlName(className) {
+			return $('.' + className).children('td')[0].innerHTML;
+		};
+
+		function recordCellHtmlCalories(className) {
+			return $('.' + className).children('td')[1].innerHTML;
+		};
+
+		function classNameClickedRow(clicked) {
+			return $(clicked).parents('tr').attr('class');
+		};
+
+		function addEventListenerForEnter(table, className, oldName, oldCalories, el) {
+			document.getElementById(table + '-table').addEventListener('keydown', function (event) {
+				if (event.keyCode == 13 || event.keyCode == 9) {
+					event.preventDefault();
+					var newName = recordCellHtmlName(className);
+					var newCalories = recordCellHtmlCalories(className);
+					editCorrectTable(table, newName, newCalories, oldName, oldCalories);
+					el.blur();
+				}
+			}, true);
+		};
+
+		function addEventListenerForMousedown(table, className, oldName, oldCalories, el) {
+			document.addEventListener('mousedown', function (event) {
+				var newName = recordCellHtmlName(className);
+				var newCalories = recordCellHtmlCalories(className);
+				editCorrectTable(table, newName, newCalories, oldName, oldCalories);
+				el.blur();
+			}, true);
+		}
+
+		function editCorrectTable(table, newName, newCalories, oldName, oldCalories) {
+			switch (table) {
+				case 'foods':
+					editFoodStorage(newName, newCalories, oldName, oldCalories);
+					break;
+				case 'exercises':
+					editExercisesStorage(newName, newCalories, oldName, oldCalories);
+					break;
+				case 'diary-foods':
+					editFoodStorage(newName, newCalories, oldName, oldCalories);
+					break;
+				case 'diary-exercises':
+					editExercisesStorage(newName, newCalories, oldName, oldCalories);
+					break;
+				case 'breakfast':
+					editBreakfastStorage(newName, newCalories, oldName, oldCalories);
+					break;
+				case 'lunch':
+					editLunchStorage(newName, newCalories, oldName, oldCalories);
+					break;
+				case 'dinner':
+					editDinnerStorage(newName, newCalories, oldName, oldCalories);
+					break;
+				case 'snacks':
+					editSnacksStorage(newName, newCalories, oldName, oldCalories);
+					break;
+				case 'exercise':
+					editExerciseStorage(newName, newCalories, oldName, oldCalories);
+					break;
+			}
+		}
+
+		function editFoodStorage(newName, newCalories, oldName, oldCalories) {
+			var food = new Food(newName, newCalories);
+			food.edit(oldName, oldCalories);
+		};
+
+		function editExercisesStorage(newName, newCalories, oldName, oldCalories) {
+			var exercises = new Exercises(newName, newCalories);
+			exercises.edit(oldName, oldCalories);
+		};
+
+		function editBreakfastStorage(newName, newCalories, oldName, oldCalories) {
+			var breakfast = new Breakfast(newName, newCalories);
+			breakfast.edit($('#date').text(), oldName, oldCalories);
+		};
+
+		function editLunchStorage(newName, newCalories, oldName, oldCalories) {
+			var lunch = new Lunch(newName, newCalories);
+			lunch.edit($('#date').text(), oldName, oldCalories);
+		};
+
+		function editDinnerStorage(newName, newCalories, oldName, oldCalories) {
+			var dinner = new Dinner(newName, newCalories);
+			dinner.edit($('#date').text(), oldName, oldCalories);
+		};
+
+		function editSnacksStorage(newName, newCalories, oldName, oldCalories) {
+			var snacks = new Snacks(newName, newCalories);
+			snacks.edit($('#date').text(), oldName, oldCalories);
+		};
+
+		function editExerciseStorage(newName, newCalories, oldName, oldCalories) {
+			var exercise = new Exercise(newName, newCalories);
+			exercise.edit($('#date').text(), oldName, oldCalories);
+		};
+	};
+
+	module.exports = Editable;
+
+/***/ },
+/* 10 */
 /***/ function(module, exports) {
 
 	function Food(name, calories) {
@@ -28320,7 +28475,7 @@
 	module.exports = Food;
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports) {
 
 	function Breakfast(name, calories) {
@@ -28363,7 +28518,7 @@
 	module.exports = Breakfast;
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports) {
 
 	function Lunch(name, calories) {
@@ -28406,7 +28561,7 @@
 	module.exports = Lunch;
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports) {
 
 	function Dinner(name, calories) {
@@ -28449,7 +28604,7 @@
 	module.exports = Dinner;
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports) {
 
 	function Snacks(name, calories) {
@@ -28492,7 +28647,7 @@
 	module.exports = Snacks;
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports) {
 
 	function Exercise(name, calories) {
