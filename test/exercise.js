@@ -177,7 +177,10 @@ test.describe('testing exercises.html', function() {
     calories.sendKeys('300');
     submitButton.click();
 
-    driver.findElement({css: '.delete-exercises'}).click();
+    exerciseDelete = driver.findElement({css: '.delete-exercises'});
+    driver.sleep(1000);
+    exerciseDelete.click();
+
 
     driver.findElement({id: 'exercises-table-body'}).getText().then(function(value){
       expect(value).to.be.empty;
