@@ -1,18 +1,19 @@
 # Quantified Self
 
-when, where, timing, checkins, relevant work things, context, original link to project assignment
-
-Quantitfied Self is a diary to help you keep track of the foods you're eating and the exercises you're doing in the context of calories. You'll be greeted by your dashboard containing the diary for the day, consisting of meal table to which you can add/remove foods and exercises along with a totals table and possible selections for exercises and foods. `Create New` buttons will guide you to pages to create foods and exercises.
-
-The calorie goals for individual meals is as follows:
-* Breakfast: 400
-* Lunch:     600
-* Dinner:    800
-* Snacks:    200
+Quantifies Self is a project built in javascript and html only hosted on github pages. The time scope of the project was two weeks worked on in a group of two while balancing other responsibilities. The original project prompt can be found [here](http://backend.turing.io/module4/projects/quantified-self).
 
 ## Initial Setup
 
-To set-up the project please follow these steps:
+If you don't already have node
+```shell
+brew install node
+```
+ps: npm is automatically installed when you install node with homebrew.
+
+pps: If you're on a mac and don't already have homebrew, you should [check it out](http://brew.sh/).
+
+##### To set-up this particular project please follow these steps:
+
 
 1. Clone the repository and rename the repository to `quantified-self` in one command
 
