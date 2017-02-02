@@ -176,8 +176,6 @@
 	  return sum;
 	}
 
-	// Total Calories table _________________________
-
 	function addTotalCaloriesConsumed() {
 	  return addCalories('breakfast') + addCalories('lunch') + addCalories('dinner') + addCalories('snacks');
 	}
@@ -185,6 +183,28 @@
 	function caloriesConsumedTotal() {
 	  var sum = addTotalCaloriesConsumed();
 	  $('#totals-calories-consumed').text(sum);
+	};
+
+	function addTotalCaloriesBurned() {
+	  return addCalories('exercise');
+	}
+
+	function caloriesBurnedTotal() {
+	  var sum = addTotalCaloriesBurned();
+	  $('#totals-calories-burned').text(sum);
+	};
+
+	function caloriesRemainingTotal() {
+	  var sum = parseInt($('#totals-goal-calories').text(), 10) - addTotalCaloriesConsumed();
+	  $('#totals-remaining-calories').text(sum);
+	}
+
+	function addToCheckBoxTable(name, calories, table) {
+	  var row = '<tr id="editable" class="new-row" ><td contenteditable="true">' + name + '</td><td contenteditable="true">' + calories + '</td><td><input type="checkbox" id="' + name + '"/><label for="' + name + '"></label></td></tr>';
+	  $('.' + table + ' > tbody').prepend(row);
+	  makeEditable(table);
+=======
+>>>>>>> origin/development
 	};
 
 	function addTotalCaloriesBurned() {

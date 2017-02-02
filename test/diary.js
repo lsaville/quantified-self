@@ -699,6 +699,48 @@ test.it('each meal table has a list of food and calories', function(){
     });
   })
 
+  test.it('clears checkboxes from foods table after add is clicked and the rows are added', function(){
+    driver.get('http://localhost:8080/');
+
+    var data = JSON.stringify([{name: 'banana', calories: '300'}, {name: 'Chocolate', calories: '300'}]);
+    driver.executeScript("window.localStorage.setItem('foods','" +data+ "');");
+
+    driver.get('http://localhost:8080/');
+
+    addToBreakfastButton = driver.findElement({id: 'add-to-breakfast'});
+    bananaCheckBox       = driver.findElement({css: 'input#banana'});
+    chocolateCheckBox    = driver.findElement({css: 'input#Chocolate'}) ;
+
+    driver.executeScript("arguments[0].click();", bananaCheckBox);
+    driver.executeScript("arguments[0].click();", chocolateCheckBox);
+    addToBreakfastButton.click();
+
+    driver.findElements({css: 'input[type=checkbox]:checked'}).then(function(value) {
+      assert.deepEqual(value, []);
+    })
+  })
+
+  test.it('clears checkboxes from exercises table after add is clicked and the rows are added', function(){
+    driver.get('http://localhost:8080/');
+
+    var data = JSON.stringify([{name: 'running', calories: '555'}, {name: 'swimming', calories: '9999'}]);
+    driver.executeScript("window.localStorage.setItem('exercises','" +data+ "');");
+
+    driver.get('http://localhost:8080/');
+
+    addToExerciseButton = driver.findElement({id: 'add-to-exercise'});
+    runningCheckBox      = driver.findElement({css: 'input#running'});
+    swimmingCheckBox     = driver.findElement({css: 'input#swimming'}) ;
+
+    driver.executeScript("arguments[0].click();", runningCheckBox);
+    driver.executeScript("arguments[0].click();", swimmingCheckBox);
+    addToExerciseButton.click();
+
+    driver.findElements({css: 'input[type=checkbox]:checked'}).then(function(value) {
+      assert.deepEqual(value, []);
+    })
+  })
+
   test.it("reroutes to the exercise page when you click 'Create New' in the exercises section", function() {
     driver.get('http://localhost:8080/');
 
@@ -969,5 +1011,4 @@ test.it('each meal table has a list of food and calories', function(){
     })
 
   });
-
 })
