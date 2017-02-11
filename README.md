@@ -1,6 +1,6 @@
 # Quantified Self
 
-Quantifies Self is a project built in javascript and html only hosted on github pages. The time scope of the project was two weeks worked on in a group of two while balancing other responsibilities. The original project prompt can be found [here](http://backend.turing.io/module4/projects/quantified-self).
+Quantified Self is a project built in javascript and html only hosted on github pages. The time scope of the project was two weeks worked on in a group of two while balancing other responsibilities. The original project prompt can be found [here](http://backend.turing.io/module4/projects/quantified-self).
 
 ## Initial Setup
 
