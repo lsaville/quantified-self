@@ -2,6 +2,9 @@
 
 Quantified Self is a project built in javascript and html only hosted on github pages. The time scope of the project was two weeks worked on in a group of two while balancing other responsibilities. The original project prompt can be found [here](http://backend.turing.io/module4/projects/quantified-self).
 
+###### Main page
+![image of diary page](https://github.com/lsaville/readme-screenshots/blob/master/quantified-self/Screen%20Shot%202017-02-11%20at%203.38.56%20PM.png?raw=true)
+
 ## Initial Setup
 
 If you don't already have node
