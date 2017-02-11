@@ -5,10 +5,6 @@ Quantified Self is a project built in javascript and html only hosted on github 
 ###### Main page
 
 ![image of diary page(upper)](https://github.com/lsaville/readme-screenshots/blob/master/quantified-self/Screen%20Shot%202017-02-11%20at%203.38.56%20PM.png?raw=true)
---------------------------------------------------------------------------------------------------------------------------
-![image of diary page(middle)](https://github.com/lsaville/readme-screenshots/blob/master/quantified-self/Screen%20Shot%202017-02-11%20at%203.40.05%20PM.png?raw=true)
---------------------------------------------------------------------------------------------------------------------------
-![image of diary page(lower)](https://github.com/lsaville/readme-screenshots/blob/master/quantified-self/Screen%20Shot%202017-02-11%20at%203.40.56%20PM.png?raw=true)
 
 ## Initial Setup
 
